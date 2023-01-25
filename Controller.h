@@ -10,12 +10,13 @@
 #include "Reserve.h"
 #include "Food.h"
 #include "Self.h"
+#include "DatabaseCommand.h"
 
 #define MAX_QUERY_SIZE 1000
 #define LOGIN 1
 #define LOGOUT 0
 
-#define BACK 'b'
+#define BACK 0
 
 
 void handle_student_profile_menu() {
@@ -319,7 +320,7 @@ void handel_main_menu() {
                 handel_student_login_menu();
                 break;
             case 2:
-                handel_admin_login_menu();
+                register_student_command();
                 break;
             case 3:
                 break_flag = true;

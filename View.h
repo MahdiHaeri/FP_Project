@@ -53,42 +53,6 @@ void student_login_menu() {
 }
 
 // Register/
-// void register_menu() {
-//     // get user info
-//     printf("Enter your name: ");
-//     char name[50];
-//     scanf("%s", name);
-//     printf("Enter your password: ");
-//     char password[50];
-//     scanf("%s", password);
-//     printf("Enter your student id: ");
-//     char student_id[50];
-//     scanf("%s", student_id);
-//     printf("Enter your phone number: ");
-//     char phone_number[50];
-//     scanf("%s", phone_number);
-//     printf("Enter your email: ");
-//     char email[50];
-//     scanf("%s", email);
-//     printf("Enter your address: ");
-//     char address[50];
-//     scanf("%s", address);
-//     printf("Enter your balance: ");
-//     int balance;
-//     scanf("%d", &balance);
-//     printf("Enter your status: ");
-//     int status;
-//     scanf("%d", &status);
-//     printf("Enter your type: ");
-//     int type;
-//     scanf("%d", &type);
-//     // create user
-//     User* user = create_user(name, password, student_id, phone_number, email, address, balance, status, type);
-//     // insert user to database
-//     insert_user(user);
-//     // free user
-//     free_user(user);
-// }
 // -----------------------------------------------
 
 // login as admin/ Student management/ 
