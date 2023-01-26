@@ -317,7 +317,7 @@ void handel_main_menu() {
         scanf("%d", &choice);
         switch(choice) {
             case 1:
-                handel_student_login_menu();
+                login_user_command();
                 break;
             case 2:
                 register_student_command();

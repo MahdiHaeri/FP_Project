@@ -10,6 +10,10 @@
 #include "Food.h"
 #include "Self.h"
 #include "Database.h"
+#include "Controller.h"
+
+void handel_student_login_menu();
+void handel_admin_login_menu();  
 
 
 #define MAX_QUERY_SIZE 1000
@@ -35,19 +39,19 @@ void register_student_command() {
 
     // get input
     printf("Enter your name: ");
-    scanf("%s", name);
+    scanf(" %s", name);
     printf("Enter your family: ");
-    scanf("%s", family);
+    scanf(" %s", family);
     printf("Enter your user id: ");
     scanf("%d", &user_id);
     printf("Enter your password: ");
-    scanf("%s", password);
+    scanf(" %s", password);
     printf("Enter your nation id code: ");
-    scanf("%s", nation_id_code);
+    scanf(" %s", nation_id_code);
     printf("Enter your birth date: ");
     scanf("%lld", &birth_date);
     printf("Enter your gender: ");
-    scanf("%s", gender);
+    scanf(" %s", gender);
     
     // create user
     User new_user;
@@ -67,4 +71,48 @@ void register_student_command() {
     insert_user(&new_user);
 }
 
+void user_constructor(User* user) {
+    user->name = (char*)malloc(sizeof(char) * MAX_ARRAY_SIZE);
+    user->family = (char*)malloc(sizeof(char) * MAX_ARRAY_SIZE);
+    user->password = (char*)malloc(sizeof(char) * MAX_ARRAY_SIZE);
+    user->nation_id_code = (char*)malloc(sizeof(char) * MAX_ARRAY_SIZE);
+    user->gender = (char*)malloc(sizeof(char) * MAX_ARRAY_SIZE);
+    user->type = (char*)malloc(sizeof(char) * MAX_ARRAY_SIZE);
+    user->status = (char*)malloc(sizeof(char) * MAX_ARRAY_SIZE);
+    user->login_logout = (char*)malloc(sizeof(char) * MAX_ARRAY_SIZE);
+}
+
+void login_user_command() {
+    User* user = (User*)malloc(sizeof(User));
+    user_constructor(user);
+    printf("Enter your user id: ");
+    scanf("%d", &user->user_id);
+    printf("Enter your password: ");
+    scanf(" %s", user->password);
+
+    select_user_by_id_and_password(user);
+    if (user->name == NULL) {
+        printf("User not found, your user id or password is not correct!\n");
+    } else {
+        current_user = *user;
+        printf("User found!\n");
+    }
+    if (strcmp(user->status, "deactive") == 0) {
+        printf("Your account is deactive!\n");
+    } else {
+        if (strcmp(user->login_logout, "login") == 0) {
+            printf("You are already logged in!\n");
+        } else {
+            user->login_logout = "login";
+            login_user(user);
+            if (strcmp(user->type, "student") == 0) {
+                printf("Welcome student!\n");
+                handel_student_login_menu();
+            } else if (strcmp(user->type, "admin") == 0) {
+                printf("Welcome admin!\n");
+                handel_admin_login_menu();
+            }
+        }
+    }
+}
 #endif

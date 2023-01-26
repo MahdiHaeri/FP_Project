@@ -9,7 +9,7 @@
 #include "Reserve.h"
 #include "Food.h"
 #include "Self.h"
-
+#include "CallBack.h"
 
 #define MAX_QUERY_SIZE 1000
 #define LOGIN 1
@@ -146,6 +146,14 @@ void init_database() {
 }
 
 
+
+
+
+
+
+
+
+
 // ----------------------------------------------
 
 void insert_user(User* user) {
@@ -167,7 +175,6 @@ void insert_user(User* user) {
     rc = sqlite3_exec(db, query, NULL, NULL, &error_message);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "inser_user error: %s", error_message);
-        exit(1);
     }
 }
 
@@ -305,7 +312,16 @@ void show_user_reserve(User* user) {
     }
 }
 
-
-
+void select_user_by_id_and_password(User* user) {
+    int rc;
+    char query[MAX_QUERY_SIZE];
+    char* error_message;
+    sprintf(query, "SELECT * FROM User WHERE user_id = %d AND password = '%s';", user->user_id, user->password);
+    rc = sqlite3_exec(db, query, callback_get_student, user, &error_message);
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "select_user_by_id_and_password error: %s", error_message);
+        exit(1);
+    }
+}
 
 #endif

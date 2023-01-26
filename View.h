@@ -26,6 +26,7 @@ int callback(void* data, int argc, char** argv, char** azColName) {
 //
 void main_menu() {
     printf("Welcome to the restaurant reservation system\n");
+    printf("~/\n");
     printf("1. Login\n");
     printf("2. Register\n");
     printf("3. Exit\n");
@@ -35,21 +36,23 @@ void main_menu() {
 
 // login as admin/
 void admin_login_menu() {
+    printf("~/login/\n");
     printf("1. Student management\n");
     printf("2. Food management\n");
     printf("3. Meal management\n");
     printf("4. Self management\n");
     printf("6. Profile\n");
-    printf("7. Back\n");
+    printf("7. logout\n");
 }
 
 // login as student/
 void student_login_menu() {
+    printf("~/login/\n");
     printf("1. Reserve\n");
     printf("2. Check News\n");
     printf("3. Check Poll\n");
     printf("4. Profile\n");
-    printf("5. Back\n");
+    printf("5. logout\n");
 }
 
 // Register/
@@ -127,9 +130,18 @@ void student_profile_menu() {
 
 // -----------------------------------------------
 
-
-
-
+void print_user_info(User* user) {
+    printf("user name: %s\n", user->name);
+    printf("user family: %s\n", user->family);
+    printf("user password: %s\n", user->password);
+    printf("user nation id code: %s\n", user->nation_id_code);
+    printf("user birth data: %lld\n", user->birthdate);
+    printf("user gender: %s\n", user->gender);
+    printf("user type: %s\n", user->type);
+    printf("user status: %s\n", user->status);
+    printf("user login logout: %s\n", user->login_logout);
+    printf("user balance: %d\n", user->balance);
+}
 
     
 #endif
