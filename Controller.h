@@ -29,9 +29,11 @@ void handle_student_profile_menu() {
             // 4 case 
             case 1:
                 // change password
+                change_current_user_password_command();
                 break;
             case 2:
-                // change phone number
+                // charge account
+                charge_current_user_account_command();
                 break;
             case 3:
                 // change email
@@ -314,7 +316,8 @@ void handel_student_login_menu() {
                 handel_student_check_news_menu();
                 break;
             case 4:
-                handel_student_reserve_menu();
+                // student profile
+                handle_student_profile_menu();
                 break;
             case BACK:
                 break_flag = true;
