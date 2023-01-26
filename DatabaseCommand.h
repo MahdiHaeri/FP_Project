@@ -182,4 +182,30 @@ void charge_user_account_command() {
 }
 
 
+// ----------------- Food -----------------
+
+void define_food_command() {
+    int food_id;
+    char name[MAX_ARRAY_SIZE];
+    int price;
+    char type[MAX_ARRAY_SIZE];
+
+    printf("Enter food id: ");
+    scanf("%d", &food_id);
+    printf("Enter food name: ");
+    scanf(" %s", name);
+    printf("Enter food price: ");
+    scanf("%d", &price);
+    printf("Enter food type: ");
+    scanf(" %s", type);
+
+    Food food;
+    food.food_id = food_id;
+    food.name = name;
+    food.price = price;
+    food.type = type;
+
+    insert_food(&food);
+}
+
 #endif

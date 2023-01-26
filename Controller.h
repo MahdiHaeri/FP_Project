@@ -205,7 +205,7 @@ void handel_admin_food_management_menu() {
         switch(choice) {
             case 1:
                 // add new food to database 
-                
+                define_food_command();
                 break;
             case 2:
                 // change phone number

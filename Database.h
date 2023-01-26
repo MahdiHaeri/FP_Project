@@ -324,4 +324,21 @@ void select_user_by_id_and_password(User* user) {
     }
 }
 
+// ------------------ Food ------------------ //
+
+void insert_food(Food* food) {
+    int rc;
+    char query[MAX_QUERY_SIZE];
+    char* error_message;
+    sprintf(query, "INSERT INTO Food VALUES(%d, '%s', '%s', %d);", 
+            food->food_id,
+            food->name,
+            food->type,
+            food->price);
+    rc = sqlite3_exec(db, query, NULL, NULL, &error_message);
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "inser_user error: %s", error_message);
+    }
+}
+
 #endif
