@@ -78,7 +78,7 @@ void login_user_command() {
     scanf(" %s", user->password);
 
     select_user_by_id_and_password(user);
-    
+
     if (user->name == NULL) {
         printf("User not found, your user id or password is not correct!\n");
     } else {
@@ -257,6 +257,26 @@ void change_food_price_command() {
     Food food;
     food.food_id = food_id;
     change_food_price(&food, new_price);
+}
+
+void send_charge_command() {
+    int user_id;
+    int amount;
+    printf("Whose user do you want send charge?\n");
+    printf("Enter user id: ");
+    scanf("%d", &user_id);
+    printf("Enter amount: ");
+    scanf("%d", &amount);
+    if (amount > current_user->balance) {
+        printf("You don't have enough money!\n");
+        return;
+    }
+
+    User user;
+    user.user_id = user_id;
+    charge_user_account(&user, amount);
+    charge_user_account(current_user, -amount);
+    current_user->balance -= amount;
 }
 
 

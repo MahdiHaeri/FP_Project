@@ -36,7 +36,8 @@ void handle_student_profile_menu() {
                 charge_current_user_account_command();
                 break;
             case 3:
-                // change email
+                // send charge 
+                send_charge_command();
                 break;
             case BACK:
                 break_flag = true;
