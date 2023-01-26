@@ -232,7 +232,7 @@ void approve_user(User* user) {
     int rc;
     char query[MAX_QUERY_SIZE];
     char* error_message;
-    sprintf(query, "UPDATE User SET status = 'approved' WHERE user_id = %d;", user->user_id);
+    sprintf(query, "UPDATE User SET status = 'active' WHERE user_id = %d;", user->user_id);
     rc = sqlite3_exec(db, query, NULL, NULL, &error_message);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "approve_user error: %s", error_message);

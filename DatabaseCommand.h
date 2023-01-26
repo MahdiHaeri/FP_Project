@@ -71,17 +71,6 @@ void register_student_command() {
     insert_user(&new_user);
 }
 
-void user_constructor(User* user) {
-    user->name = (char*)malloc(sizeof(char) * MAX_ARRAY_SIZE);
-    user->family = (char*)malloc(sizeof(char) * MAX_ARRAY_SIZE);
-    user->password = (char*)malloc(sizeof(char) * MAX_ARRAY_SIZE);
-    user->nation_id_code = (char*)malloc(sizeof(char) * MAX_ARRAY_SIZE);
-    user->gender = (char*)malloc(sizeof(char) * MAX_ARRAY_SIZE);
-    user->type = (char*)malloc(sizeof(char) * MAX_ARRAY_SIZE);
-    user->status = (char*)malloc(sizeof(char) * MAX_ARRAY_SIZE);
-    user->login_logout = (char*)malloc(sizeof(char) * MAX_ARRAY_SIZE);
-}
-
 void login_user_command() {
     User* user = (User*)malloc(sizeof(User));
     user_constructor(user);
@@ -91,6 +80,7 @@ void login_user_command() {
     scanf(" %s", user->password);
 
     select_user_by_id_and_password(user);
+
     if (user->name == NULL) {
         printf("User not found, your user id or password is not correct!\n");
     } else {
@@ -114,5 +104,46 @@ void login_user_command() {
             }
         }
     }
+}
+
+void delete_user_command() {
+    int user_id;
+    printf("Which one of the user you want to delete?\n");
+    printf("Enter user id : ");
+    scanf("%d", &user_id);
+    printf("Are you sure you want to delete user with id %d? (y/n): ", user_id);
+    char answer;
+    scanf(" %c", &answer);
+    if (answer == 'n') {
+        return;
+    }
+    User user;
+    user.user_id = user_id;
+    delete_user(&user);
+}
+
+void change_pass_with_admi_command() {
+    int user_id;
+    char new_password[MAX_ARRAY_SIZE];
+    printf("Whose password do you want to change?\n");
+    printf("Enter user id: ");
+    scanf("%d", &user_id);
+    printf("Please enter new password for user with id %d: ", user_id);
+    scanf(" %s", new_password);
+
+    User user;
+    user.user_id = user_id;
+    change_user_password(&user, new_password);
+}
+
+void approve_command() {
+    int user_id;
+    printf("Whose User do you want to approve?\n");
+    printf("Enter User id: ");
+    scanf("%d", &user_id);
+
+    User user;
+    user.user_id = user_id;
+    approve_user(&user);
 }
 #endif

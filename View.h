@@ -133,6 +133,7 @@ void student_profile_menu() {
 void print_user_info(User* user) {
     printf("user name: %s\n", user->name);
     printf("user family: %s\n", user->family);
+    printf("user id: %d\n", user->user_id);
     printf("user password: %s\n", user->password);
     printf("user nation id code: %s\n", user->nation_id_code);
     printf("user birth data: %lld\n", user->birthdate);

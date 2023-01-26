@@ -230,13 +230,14 @@ void handel_admin_student_management_menu() {
         scanf("%d", &choice);
         switch(choice) {
             case 1:
-                // change password
+                approve_command();
                 break;
             case 2:
-                // change phone number
+                change_pass_with_admi_command();
                 break;
             case 3:
-                // change email
+                // remove student 
+                delete_user_command();
                 break;
             case BACK:
                 break_flag = true;
@@ -256,7 +257,7 @@ void handel_admin_login_menu() {
         scanf("%d", &choice);
         switch(choice) {
             case 1:
-                handel_admin_profile_menu();
+                handel_admin_student_management_menu();
                 break;
             case 2:
                 handel_admin_self_management_menu();
@@ -322,7 +323,7 @@ void handel_main_menu() {
             case 2:
                 register_student_command();
                 break;
-            case 3:
+            case BACK:
                 break_flag = true;
                 break;
             default:
