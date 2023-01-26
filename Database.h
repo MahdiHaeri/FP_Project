@@ -31,7 +31,7 @@ void open_database() {
 void create_food_table() {
     int rc;
     char* error_message;
-    char query[MAX_QUERY_SIZE] = "CREATE TABLE Food ("\
+    char query[MAX_QUERY_SIZE] = "CREATE TABLE IF NOT EXISTS Food ("\
 	"food_id	INTEGER NOT NULL,"\
 	"name	INTEGER NOT NULL,"\
 	"type	INTEGER NOT NULL,"\
@@ -46,7 +46,7 @@ void create_food_table() {
 void create_user_table() {
     int rc;
     char* error_message;
-    char query[MAX_QUERY_SIZE] = "CREATE TABLE User (" \
+    char query[MAX_QUERY_SIZE] = "CREATE TABLE IF NOT EXISTS User (" \
     "user_id	INTEGER NOT NULL," \
 	"name 	TEXT NOT NULL," \
 	"family 	TEXT NOT NULL," \
@@ -68,7 +68,7 @@ void create_user_table() {
 void create_Self_table() {
     int rc;
     char* error_message;
-    char query[MAX_QUERY_SIZE] = "CREATE TABLE Self (" \
+    char query[MAX_QUERY_SIZE] = "CREATE TABLE IF NOT EXISTS Self (" \
     "self_id	INTEGER NOT NULL," \
     "name	TEXT," \
     "location	TEXT," \
@@ -89,7 +89,7 @@ void create_Self_table() {
 void create_reserve_table() {
     int rc;
     char* error_message;
-    char query[MAX_QUERY_SIZE] = "CREATE TABLE Reserve (" \
+    char query[MAX_QUERY_SIZE] = "CREATE TABLE IF NOT EXISTS Reserve (" \
     "reserve_id	INTEGER NOT NULL," \
     "self_id	INTEGER NOT NULL," \
     "date	INTEGER," \
@@ -105,7 +105,7 @@ void create_reserve_table() {
 void create_meal_plan_table() {
     int rc;
     char* error_message;
-    char query[MAX_QUERY_SIZE] = "CREATE TABLE MealPlan (" \
+    char query[MAX_QUERY_SIZE] = "CREATE TABLE IF NOT EXISTS MealPlan (" \
     "meal_id	INTEGER NOT NULL," \
     "self_id	INTEGER NOT NULL," \
     "type	TEXT," \
@@ -120,7 +120,7 @@ void create_meal_plan_table() {
 void create_food_plan_connector_table() {
     int rc;
     char* error_message;
-    char query[MAX_QUERY_SIZE] = "CREATE TABLE FoodPlanConnector (" \
+    char query[MAX_QUERY_SIZE] = "CREATE TABLE IF NOT EXISTS FoodPlanConnector (" \
     "meal_plan_id	INTEGER NOT NULL," \
     "food_id	INTEGER NOT NULL," \
     "count	INTEGER NOT NULL," \
@@ -132,8 +132,8 @@ void create_food_plan_connector_table() {
 }
 
 void create_tables() {
-    create_food_table();
     create_user_table();
+    create_food_table();
     create_Self_table();
     create_reserve_table();
     create_meal_plan_table();
