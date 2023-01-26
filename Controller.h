@@ -204,7 +204,8 @@ void handel_admin_food_management_menu() {
         scanf("%d", &choice);
         switch(choice) {
             case 1:
-                // change password
+                // add new food to database 
+                
                 break;
             case 2:
                 // change phone number
@@ -267,7 +268,7 @@ void handel_admin_login_menu() {
                 handel_admin_student_management_menu();
                 break;
             case 2:
-                handel_admin_self_management_menu();
+                handel_admin_food_management_menu();
                 break;
             case 3:
                 handel_admin_meal_management_menu();
@@ -280,6 +281,7 @@ void handel_admin_login_menu() {
                 break;
             case BACK:
                 break_flag = true;
+                logout_user_command();
                 break;
             default:
                 printf("Invalid choice\n");
@@ -309,6 +311,7 @@ void handel_student_login_menu() {
                 break;
             case BACK:
                 break_flag = true;
+                logout_user_command();
                 break;
             default:
                 printf("Invalid choice\n");

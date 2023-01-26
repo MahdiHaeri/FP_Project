@@ -15,7 +15,7 @@
 int main(int argc, char const *argv[]) {
     // init database
     init_database();
-    User user = {"admin", "admin", 1, "admin", "admin", 0, "admin", "admin", "active", "admin", 0};
+    User user = {"admin", "admin", 1, "admin", "admin", 0, "admin", "admin", "active", "logout", 0};
     insert_user(&user);
 
     handel_main_menu();

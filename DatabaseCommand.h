@@ -21,7 +21,7 @@ void handel_admin_login_menu();
 #define LOGIN 1
 #define LOGOUT 0
 
-User current_user;
+User* current_user;
 
 void register_student_command() {
     // define variables
@@ -80,11 +80,10 @@ void login_user_command() {
     scanf(" %s", user->password);
 
     select_user_by_id_and_password(user);
-
     if (user->name == NULL) {
         printf("User not found, your user id or password is not correct!\n");
     } else {
-        current_user = *user;
+        current_user = user;
         printf("User found!\n");
     }
     if (strcmp(user->status, "deactive") == 0) {
@@ -103,6 +102,16 @@ void login_user_command() {
                 handel_admin_login_menu();
             }
         }
+    }
+}
+
+void logout_user_command() {
+    if (strcmp(current_user->login_logout, "logout") == 0) {
+        printf("You are already logged out!\n");
+    } else {
+        current_user->login_logout = "logout";
+        logout_user(current_user);
+        current_user = NULL;
     }
 }
 

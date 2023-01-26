@@ -194,7 +194,7 @@ void login_user(User* user) {
     int rc;
     char query[MAX_QUERY_SIZE];
     char* error_message;
-    sprintf(query, "UPDATE User SET login_logout = 1 WHERE user_id = %d;", user->user_id);
+    sprintf(query, "UPDATE User SET login_logout = 'login' WHERE user_id = %d;", user->user_id);
     rc = sqlite3_exec(db, query, NULL, NULL, &error_message);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "login_user error: %s", error_message);
@@ -206,10 +206,10 @@ void logout_user(User* user) {
     int rc;
     char query[MAX_QUERY_SIZE];
     char* error_message;
-    sprintf(query, "UPDATE User SET login_logout = 0 WHERE user_id = %d;", user->user_id);
+    sprintf(query, "UPDATE User SET login_logout = 'logout' WHERE user_id = %d;", user->user_id);
     rc = sqlite3_exec(db, query, NULL, NULL, &error_message);
     if (rc != SQLITE_OK) {
-        fprintf(stderr, "logout_user error: %s", error_message);
+        fprintf(stderr, "login_user error: %s", error_message);
         exit(1);
     }
 }
