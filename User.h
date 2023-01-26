@@ -13,12 +13,12 @@ struct User {
     char* family;
     int user_id;
     char* password;
-    int nation_id_code;
+    char* nation_id_code;
     long long int birthdate;
     char* gender;
     char* type;
     char* status;
-    bool login_logout;
+    char* login_logout;
     int balance;
 };
 

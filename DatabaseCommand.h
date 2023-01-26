@@ -25,7 +25,7 @@ void register_student_command() {
     char family[MAX_ARRAY_SIZE];
     int user_id;
     char password[MAX_ARRAY_SIZE];
-    int nation_id_code;
+    char nation_id_code[MAX_ARRAY_SIZE];
     long long int birth_date;
     char gender[MAX_ARRAY_SIZE];
     char type[MAX_ARRAY_SIZE] = "student";
@@ -42,8 +42,8 @@ void register_student_command() {
     scanf("%d", &user_id);
     printf("Enter your password: ");
     scanf("%s", password);
-    printf("Enter your national id code: ");
-    scanf("%d", &nation_id_code);
+    printf("Enter your nation id code: ");
+    scanf("%s", nation_id_code);
     printf("Enter your birth date: ");
     scanf("%lld", &birth_date);
     printf("Enter your gender: ");

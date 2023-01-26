@@ -16,6 +16,6 @@ int main(int argc, char const *argv[]) {
     // init database
     init_database();
 
-    // handel_main_menu();
+    handel_main_menu();
     return 0;
 }

@@ -51,7 +51,7 @@ void create_user_table() {
 	"name 	TEXT NOT NULL," \
 	"family 	TEXT NOT NULL," \
 	"password 	INTEGER NOT NULL," \
-	"nation_id_code 	INTEGER NOT NULL UNIQUE," \
+	"nation_id_code 	TEXT NOT NULL UNIQUE," \
 	"birthdate	INTEGER," \
 	"gender 	TEXT," \
 	"type	TEXT," \
@@ -152,7 +152,7 @@ void insert_user(User* user) {
     int rc;
     char query[MAX_QUERY_SIZE];
     char* error_message;
-    sprintf(query, "INSERT INTO User VALUSE (%d, '%s', '%s', '%s', %d, '%lld', '%s', '%s', '%s', %d);",
+    sprintf(query, "INSERT INTO User VALUES (%d, '%s', '%s', '%s', '%s', '%lld', '%s', '%s', '%s', '%s', %d);",
             user->user_id,
             user->name,
             user->family,
@@ -162,7 +162,8 @@ void insert_user(User* user) {
             user->gender,
             user->type,
             user->status,
-            user->login_logout);
+            user->login_logout,
+            user->balance);
     rc = sqlite3_exec(db, query, NULL, NULL, &error_message);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "inser_user error: %s", error_message);
