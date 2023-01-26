@@ -245,7 +245,7 @@ void deactivate_user(User* user) {
     int rc;
     char query[MAX_QUERY_SIZE];
     char* error_message;
-    sprintf(query, "UPDATE User SET status = 'deactivated' WHERE user_id = %d;", user->user_id);
+    sprintf(query, "UPDATE User SET status = 'deactive' WHERE user_id = %d;", user->user_id);
     rc = sqlite3_exec(db, query, NULL, NULL, &error_message);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "deactivate_user error: %s", error_message);

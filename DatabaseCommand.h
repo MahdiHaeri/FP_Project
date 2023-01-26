@@ -136,7 +136,7 @@ void change_pass_with_admi_command() {
     change_user_password(&user, new_password);
 }
 
-void approve_command() {
+void approve_user_command() {
     int user_id;
     printf("Whose User do you want to approve?\n");
     printf("Enter User id: ");
@@ -146,4 +146,31 @@ void approve_command() {
     user.user_id = user_id;
     approve_user(&user);
 }
+
+void deactivate_user_command() {
+    int user_id;
+    printf("Whose User do you want to deactive?\n");
+    printf("Enter User id: ");
+    scanf("%d", &user_id);
+
+    User user;
+    user.user_id = user_id;
+    deactivate_user(&user);
+}
+
+void charge_user_account_command() {
+    int user_id;
+    int amount;
+    printf("Whose User do you want to charge?\n");
+    printf("Enter User id: ");
+    scanf("%d", &user_id);
+    printf("Enter amount: ");
+    scanf("%d", &amount);
+
+    User user;
+    user.user_id = user_id;
+    charge_user_account(&user, amount);
+}
+
+
 #endif

@@ -230,7 +230,7 @@ void handel_admin_student_management_menu() {
         scanf("%d", &choice);
         switch(choice) {
             case 1:
-                approve_command();
+                approve_user_command();
                 break;
             case 2:
                 change_pass_with_admi_command();
@@ -239,6 +239,13 @@ void handel_admin_student_management_menu() {
                 // remove student 
                 delete_user_command();
                 break;
+            case 4:
+                // deactive student
+                deactivate_user_command();
+                break;
+            case 5:
+                // charge student account 
+                charge_user_account_command();
             case BACK:
                 break_flag = true;
                 break;
