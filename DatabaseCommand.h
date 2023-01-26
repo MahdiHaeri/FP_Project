@@ -23,7 +23,7 @@ void handel_admin_login_menu();
 
 User* current_user;
 
-void register_student_command() {
+void register_user_command(char* user_type, char* user_status) {
     // define variables
     char name[MAX_ARRAY_SIZE];
     char family[MAX_ARRAY_SIZE];
@@ -32,8 +32,6 @@ void register_student_command() {
     char nation_id_code[MAX_ARRAY_SIZE];
     long long int birth_date;
     char gender[MAX_ARRAY_SIZE];
-    char type[MAX_ARRAY_SIZE] = "student";
-    char status[MAX_ARRAY_SIZE] = "deactive";
     char login_status[MAX_ARRAY_SIZE] = "logout";
     int balance = 0;
 
@@ -62,8 +60,8 @@ void register_student_command() {
     new_user.nation_id_code = nation_id_code;
     new_user.birthdate = birth_date;
     new_user.gender = gender;
-    new_user.type = type;
-    new_user.status = status;
+    new_user.type = user_type;
+    new_user.status = user_status;
     new_user.login_logout = login_status;
     new_user.balance = balance;
     
@@ -80,6 +78,7 @@ void login_user_command() {
     scanf(" %s", user->password);
 
     select_user_by_id_and_password(user);
+    
     if (user->name == NULL) {
         printf("User not found, your user id or password is not correct!\n");
     } else {
@@ -145,6 +144,21 @@ void change_pass_with_admi_command() {
     change_user_password(&user, new_password);
 }
 
+void change_current_user_password_command() {
+    char old_password[MAX_ARRAY_SIZE];
+    char new_password[MAX_ARRAY_SIZE];
+    printf("Please enter your old password: ");
+    scanf(" %s", old_password);
+    if (strcmp(old_password, current_user->password) != 0) {
+        printf("Your old password is not correct!\n");
+        return;
+    }
+    printf("Please enter your new password: ");
+    scanf(" %s", new_password);
+    change_user_password(current_user, new_password);
+    strcpy(current_user->password, new_password);
+}
+
 void approve_user_command() {
     int user_id;
     printf("Whose User do you want to approve?\n");
@@ -167,7 +181,7 @@ void deactivate_user_command() {
     deactivate_user(&user);
 }
 
-void charge_user_account_command() {
+void charge_user_account_with_admin_command() {
     int user_id;
     int amount;
     printf("Whose User do you want to charge?\n");
@@ -181,6 +195,13 @@ void charge_user_account_command() {
     charge_user_account(&user, amount);
 }
 
+void charge_current_user_account_command() {
+    int amount;
+    printf("Enter amount: ");
+    scanf("%d", &amount);
+    charge_user_account(current_user, amount);
+    current_user->balance += amount;
+}
 
 // ----------------- Food -----------------
 
@@ -207,5 +228,36 @@ void define_food_command() {
 
     insert_food(&food);
 }
+
+void delete_food_command() {
+    int food_id;
+    printf("Which one of the food you want to delete?\n");
+    printf("Enter food id : ");
+    scanf("%d", &food_id);
+    printf("Are you sure you want to delete food with id %d? (y/n): ", food_id);
+    char answer;
+    scanf(" %c", &answer);
+    if (answer == 'n') {
+        return;
+    }
+    Food food;
+    food.food_id = food_id;
+    delete_food(&food);
+}
+
+void change_food_price_command() {
+    int food_id;
+    int new_price;
+    printf("Which one of the food you want to change price?\n");
+    printf("Enter food id : ");
+    scanf("%d", &food_id);
+    printf("Enter new price: ");
+    scanf("%d", &new_price);
+
+    Food food;
+    food.food_id = food_id;
+    change_food_price(&food, new_price);
+}
+
 
 #endif

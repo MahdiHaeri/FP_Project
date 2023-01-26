@@ -341,4 +341,26 @@ void insert_food(Food* food) {
     }
 }
 
+void delete_food(Food* food) {
+    int rc;
+    char query[MAX_QUERY_SIZE];
+    char* error_message;
+    sprintf(query, "DELETE FROM Food WHERE food_id = %d;", food->food_id);
+    rc = sqlite3_exec(db, query, NULL, NULL, &error_message);
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "delete_food error: %s", error_message);
+    }
+}
+
+void change_food_price(Food* food, int new_price) {
+    int rc;
+    char query[MAX_QUERY_SIZE];
+    char* error_message;
+    sprintf(query, "UPDATE Food SET price = %d WHERE food_id = %d;", new_price, food->food_id);
+    rc = sqlite3_exec(db, query, NULL, NULL, &error_message);
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "update_food_price error: %s", error_message);
+    }
+}
+
 #endif

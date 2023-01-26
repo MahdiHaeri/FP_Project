@@ -127,12 +127,15 @@ void handel_admin_profile_menu() {
         switch(choice) {
             case 1:
                 // change password
+                change_current_user_password_command();
                 break;
             case 2:
-                // change phone number
+                // charge account
+                charge_current_user_account_command();
                 break;
             case 3:
-                // change email
+                // add new admin 
+                register_user_command("admin", "active");
                 break;
             case BACK:
                 break_flag = true;
@@ -208,10 +211,12 @@ void handel_admin_food_management_menu() {
                 define_food_command();
                 break;
             case 2:
-                // change phone number
+                // remove food from database
+                delete_food_command();
                 break;
             case 3:
-                // change email
+                // change food price 
+                change_food_price_command();
                 break;
             case BACK:
                 break_flag = true;
@@ -246,7 +251,7 @@ void handel_admin_student_management_menu() {
                 break;
             case 5:
                 // charge student account 
-                charge_user_account_command();
+                charge_user_account_with_admin_command();
             case BACK:
                 break_flag = true;
                 break;
@@ -274,10 +279,12 @@ void handel_admin_login_menu() {
                 handel_admin_meal_management_menu();
                 break;
             case 4:
-                handel_admin_food_management_menu();
+                // handel self management
+                // handel_admin_food_management_menu();
                 break;
             case 5:
-                handel_admin_student_management_menu();
+                // handel profile
+                handel_admin_profile_menu();
                 break;
             case BACK:
                 break_flag = true;
@@ -331,7 +338,7 @@ void handel_main_menu() {
                 login_user_command();
                 break;
             case 2:
-                register_student_command();
+                register_user_command("student", "deactive");
                 break;
             case BACK:
                 break_flag = true;
