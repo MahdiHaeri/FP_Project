@@ -268,6 +268,8 @@ void change_food_price_command() {
 void send_charge_command() {
     int user_id;
     int amount;
+
+
     printf("Whose user do you want send charge?\n");
     printf("Enter user id: ");
     scanf("%d", &user_id);
@@ -275,7 +277,15 @@ void send_charge_command() {
         printf("You can't send charge to yourself!\n");
         return;
     }
+
+    User user;
+    user.user_id = user_id;
     
+    if (!select_public_info_of_user(&user)) {
+        printf("User with id %d doesn't exist!\n", user_id);
+        return;
+    }
+
     printf("Enter amount: ");
     scanf("%d", &amount);
     if (amount > current_user->balance) {
@@ -283,8 +293,6 @@ void send_charge_command() {
         return;
     }
 
-    User user;
-    user.user_id = user_id;
     charge_user_account(&user, amount);
     charge_user_account(current_user, -amount);
     current_user->balance -= amount;
@@ -332,7 +340,22 @@ void define_self_command() {
     self.is_open = is_open;
     
     insert_self(&self);
-    
+}
+
+void delete_self_command() {
+    int self_id;
+    printf("Which one of the self you want to delete?\n");
+    printf("Enter self id : ");
+    scanf("%d", &self_id);
+    printf("Are you sure you want to delete self with id %d? (y/n): ", self_id);
+    char answer;
+    scanf(" %c", &answer);
+    if (answer == 'n') {
+        return;
+    }
+    Self self;
+    self.self_id = self_id;
+    delete_self(&self);
 }
 
 

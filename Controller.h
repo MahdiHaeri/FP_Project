@@ -163,7 +163,7 @@ void handel_admin_self_management_menu() {
                 break;
             case 2:
                 // remove self from database
-                
+                delete_self_command();
                 break;
             case 3:
 

@@ -322,7 +322,14 @@ void insert_self(Self* self) {
     if (mysql_query(con, query)) {
         finish_with_error(con);
     }
+}
 
+void delete_self(Self* self) {
+    char query[MAX_QUERY_SIZE];
+    sprintf(query, "DELETE FROM Self WHERE self_id = %d;", self->self_id);
+    if (mysql_query(con, query)) {
+        finish_with_error(con);
+    }
 }
 
 // ------------------ Selects ------------------ //
@@ -379,6 +386,23 @@ void select_deactive_users() {
         finish_with_error(con);
     }
     print_select_result(*result);
+}
+
+bool select_public_info_of_user(User* user) {
+    char query[MAX_QUERY_SIZE];
+    sprintf(query, "SELECT user_id, name, family, balance, gender FROM User WHERE user_id = %d;", user->user_id);
+    if (mysql_query(con, query)) {
+        finish_with_error(con);
+    }
+    MYSQL_RES* result = mysql_store_result(con);
+    if (result == NULL) {
+        finish_with_error(con);
+    }
+    if (mysql_num_rows(result) == 0) {
+        return false;
+    }
+    print_select_result(*result);
+    return true;
 }
 
 #endif
