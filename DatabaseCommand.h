@@ -15,6 +15,7 @@
 #include "Controller.h"
 #include "TimeLimit.h"
 #include "News.h"
+#include "Meal.h"
 
 void handel_student_login_menu();
 void handel_admin_login_menu();  
@@ -386,7 +387,7 @@ void add_news_command() {
     printf("Enter news content: ");
     fgets(content, MAX_ARRAY_SIZE, stdin);
     content[strlen(content) - 1] = '\0';
-    
+
     printf("Enter news end date: ");
     scanf("%lld", &time_limit.end_time);
 
@@ -419,6 +420,35 @@ void delete_news_command() {
     News news;
     news.news_id = news_id;
     delete_news(&news);
+}
+
+// ----------------- Meal -----------------
+
+void define_meal_command() {
+    char meal_name[MAX_ARRAY_SIZE];
+
+    printf("Enter meal name: ");
+    scanf(" %s", meal_name);
+
+    Meal meal;
+    meal.name = meal_name;
+    insert_meal(&meal);
+}
+
+void delete_meal_command() {
+    int meal_id;
+    printf("Which one of the meal you want to delete?\n");
+    printf("Enter meal id : ");
+    scanf("%d", &meal_id);
+    printf("Are you sure you want to delete meal with id %d? (y/n): ", meal_id);
+    char answer;
+    scanf(" %c", &answer);
+    if (answer == 'n') {
+        return;
+    }
+    Meal meal;
+    meal.meal_id = meal_id;
+    delete_meal(&meal);
 }
 
 #endif

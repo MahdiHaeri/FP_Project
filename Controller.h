@@ -186,10 +186,12 @@ void handel_admin_meal_management_menu() {
         scanf("%d", &choice);
         switch(choice) {
             case 1:
-                // change password
+                // define new meal
+                define_meal_command();
                 break;
             case 2:
-                // change phone number
+                // remove meal from database
+                delete_meal_command();
                 break;
             case 3:
                 // change email
