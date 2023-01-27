@@ -5,16 +5,17 @@
 #include <string.h>
 #include <stdbool.h>
 #include <time.h>
+#include "Food.h"
+#include "Self.h"
 
 typedef struct MealPlan MealPlan;
 
 struct MealPlan {
     int meal_plan_id;
-    int user_id;
-    int food_id;
-    int meal;
+    Food* food;
+    Self* self;
     long long int date;
-    int price;
+    int count;
 };
 
 #endif

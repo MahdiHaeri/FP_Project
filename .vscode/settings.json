@@ -6,7 +6,9 @@
         "food.h": "c",
         "database.h": "c",
         "functional": "c",
-        "sqlite3.h": "c"
+        "sqlite3.h": "c",
+        "typeinfo": "c",
+        "mealfoodconnector.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

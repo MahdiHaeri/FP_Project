@@ -13,6 +13,7 @@
 #include "News.h"
 #include "Meal.h"
 #include "MealFoodConnector.h"
+#include "MealPlan.h"
 
 #define MAX_QUERY_SIZE 1000
 #define LOGIN 1
@@ -53,8 +54,8 @@ void open_database() {
 void create_food_table() {
     char query[MAX_QUERY_SIZE] = "CREATE TABLE IF NOT EXISTS Food ("\
 	"food_id	INTEGER NOT NULL,"\
-	"name	INTEGER NOT NULL,"\
-	"type	INTEGER NOT NULL,"\
+	"name	TEXT NOT NULL,"\
+	"type	TEXT NOT NULL,"\
 	"price	INTEGER,"\
 	"PRIMARY KEY(food_id));";
     if (mysql_query(con, query)) {
@@ -113,29 +114,6 @@ void create_reserve_table() {
     }
 }
 
-void create_meal_plan_table() {
-    char query[MAX_QUERY_SIZE] = "CREATE TABLE IF NOT EXISTS MealPlan (" \
-    "meal_id	INTEGER NOT NULL," \
-    "self_id	INTEGER NOT NULL," \
-    "type	TEXT," \
-    "date	INTEGER," \
-    "PRIMARY KEY(meal_id));";
-    if (mysql_query(con, query)) {
-        finish_with_error(con);
-    }
-}
-
-void create_food_plan_connector_table() {
-    char query[MAX_QUERY_SIZE] = "CREATE TABLE IF NOT EXISTS FoodPlanConnector (" \
-    "meal_plan_id	INTEGER NOT NULL," \
-    "food_id	INTEGER NOT NULL," \
-    "count	INTEGER NOT NULL," \
-    "PRIMARY KEY(meal_plan_id,food_id));";
-    if (mysql_query(con, query)) {
-        finish_with_error(con);
-    }
-}
-
 void create_news_table() {
     char query[MAX_QUERY_SIZE] = "CREATE TABLE IF NOT EXISTS News (" \
     "news_id	INTEGER NOT NULL AUTO_INCREMENT," \
@@ -150,22 +128,14 @@ void create_news_table() {
     }
 }
 
-void create_meal_table() {
-    char query[MAX_QUERY_SIZE] = "CREATE TABLE IF NOT EXISTS Meal (" \
-    "meal_id	INTEGER NOT NULL AUTO_INCREMENT," \
-    "meal_name    TEXT," \
-    "PRIMARY KEY(meal_id));";
-    if (mysql_query(con, query)) {
-        finish_with_error(con);
-    }
-}
-
-void create_meal_food_connector_table() {
-    char query[MAX_QUERY_SIZE] = "CREATE TABLE IF NOT EXISTS MealFoodConnector (" \
-    "connector_id	INTEGER NOT NULL AUTO_INCREMENT," \
-    "meal_id	INTEGER NOT NULL," \
+void create_meal_plan_table() {
+    char query[MAX_QUERY_SIZE] = "CREATE TABLE IF NOT EXISTS MealPlan (" \
+    "meal_plan_id	INTEGER NOT NULL AUTO_INCREMENT," \
+    "self_id	INTEGER NOT NULL," \
     "food_id	INTEGER NOT NULL," \
-    "PRIMARY KEY(connector_id));";
+    "date	INTEGER," \
+    "count	INTEGER," \
+    "PRIMARY KEY(meal_plan_id));";
     if (mysql_query(con, query)) {
         finish_with_error(con);
     }
@@ -177,11 +147,8 @@ void create_tables() {
     create_food_table();
     create_Self_table();
     create_reserve_table();
-    create_meal_plan_table();
-    create_food_plan_connector_table();
     create_news_table();
-    create_meal_table();
-    create_meal_food_connector_table();
+    create_meal_plan_table();
 }
 
 void init_database() {
@@ -401,7 +368,7 @@ void delete_news(News* news) {
 // ------------------ Meal ------------------ //
 
 void insert_meal(Meal* meal) {
-        char query[MAX_QUERY_SIZE];
+    char query[MAX_QUERY_SIZE];
     sprintf(query, "INSERT INTO Meal VALUES (%s, '%s')",
             "NULL",
             meal->name);
@@ -438,6 +405,30 @@ void delete_meal_food_connector(MealFoodConnector* meal_food_connector) {
         finish_with_error(con);
     }
 }
+
+// ------------------ Meal Plan ------------------ //
+
+void insert_meal_plan(MealPlan* meal_plan) {
+    char query[MAX_QUERY_SIZE];
+    sprintf(query, "INSERT INTO MealPlan VALUES (%s, %d, %d, %lld, %d)",
+            "NULL",
+            meal_plan->self->self_id,
+            meal_plan->food->food_id,
+            meal_plan->date,
+            meal_plan->count);
+    if (mysql_query(con, query)) {
+        finish_with_error(con);
+    }
+}
+
+void delete_meal_plan(MealPlan* meal_plan) {
+    char query[MAX_QUERY_SIZE];
+    sprintf(query, "DELETE FROM MealPlan WHERE meal_plan_id = %d;", meal_plan->meal_plan_id);
+    if (mysql_query(con, query)) {
+        finish_with_error(con);
+    }
+}
+
 
 // ------------------ Selects ------------------ //
 
@@ -530,6 +521,56 @@ bool select_all_foods() {
 
 bool select_all_meals() {
     char query[MAX_QUERY_SIZE] = "SELECT * FROM Meal;";
+    if (mysql_query(con, query)) {
+        finish_with_error(con);
+    }
+    MYSQL_RES* result = mysql_store_result(con);
+    if (result == NULL) {
+        finish_with_error(con);
+    }
+    if (mysql_num_rows(result) == 0) {
+        return false;
+    }
+    print_select_result(*result);
+    return true;
+}
+
+bool select_all_selfs() {
+    char query[MAX_QUERY_SIZE] = "SELECT * FROM Self;";
+    if (mysql_query(con, query)) {
+        finish_with_error(con);
+    }
+    MYSQL_RES* result = mysql_store_result(con);
+    if (result == NULL) {
+        finish_with_error(con);
+    }
+    if (mysql_num_rows(result) == 0) {
+        return false;
+    }
+    print_select_result(*result);
+    return true;
+}
+
+bool select_self_by_id(Self* self) {
+    char query[MAX_QUERY_SIZE];
+    sprintf(query, "SELECT * FROM Self WHERE self_id = %d;", self->self_id);
+    if (mysql_query(con, query)) {
+        finish_with_error(con);
+    }
+    MYSQL_RES* result = mysql_store_result(con);
+    if (result == NULL) {
+        finish_with_error(con);
+    }
+    if (mysql_num_rows(result) == 0) {
+        return false;
+    }
+    print_select_result(*result);
+    return true;
+}
+
+bool select_food_by_id(Food* food) {
+    char query[MAX_QUERY_SIZE];
+    sprintf(query, "SELECT * FROM Food WHERE food_id = %d;", food->food_id);
     if (mysql_query(con, query)) {
         finish_with_error(con);
     }

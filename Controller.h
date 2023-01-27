@@ -150,6 +150,34 @@ void handel_admin_profile_menu() {
     }
 }
 
+void handel_admin_meal_plan_management_menu() {
+    bool break_flag = false;
+    int choice;
+    while (!break_flag) {
+        admin_meal_plan_management_menu();
+        scanf("%d", &choice);
+        switch(choice) {
+            case 1:
+                // define meal plan
+                define_meal_plan_command();
+                break;
+            case 2:
+                // remove meal plan
+                delete_meal_plan_command();
+                break;
+            case 3:
+                // change email
+                break;
+            case BACK:
+                break_flag = true;
+                break;
+            default:
+                printf("Invalid choice\n");
+                break;
+        };
+    }
+}
+
 void handel_admin_self_management_menu() {
     bool break_flag = false;
     int choice;
@@ -167,39 +195,6 @@ void handel_admin_self_management_menu() {
                 break;
             case 3:
 
-                break;
-            case BACK:
-                break_flag = true;
-                break;
-            default:
-                printf("Invalid choice\n");
-                break;
-        };
-    }
-}
-
-void handel_admin_meal_management_menu() {
-    bool break_flag = false;
-    int choice;
-    while (!break_flag) {
-        admin_meal_management_menu();
-        scanf("%d", &choice);
-        switch(choice) {
-            case 1:
-                // define new meal
-                define_meal_command();
-                break;
-            case 2:
-                // remove meal from database
-                delete_meal_command();
-                break;
-            case 3:
-                // insert food to meal 
-                define_meal_food_connector_command();
-                break;
-            case 4:
-                // remove food from meal
-                delete_meal_food_connector_command();
                 break;
             case BACK:
                 break_flag = true;
@@ -300,11 +295,11 @@ void handel_admin_login_menu() {
                 handel_admin_food_management_menu();
                 break;
             case 3:
-                handel_admin_meal_management_menu();
+                handel_admin_self_management_menu();
                 break;
             case 4:
-                // handel self management
-                handel_admin_self_management_menu();
+                // handel meal plan management
+                handel_admin_meal_plan_management_menu();
                 break;
             case 5:
                 // handel profile

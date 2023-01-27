@@ -17,6 +17,7 @@
 #include "News.h"
 #include "Meal.h"
 #include "MealFoodConnector.h"
+#include "MealPlan.h"
 
 void handel_student_login_menu();
 void handel_admin_login_menu();  
@@ -500,5 +501,75 @@ void delete_meal_food_connector_command() {
     meal_food_connector.connector_id = connector_id;
 
     delete_meal_food_connector(&meal_food_connector);
+}
+
+// ----------------- meal plan -----------------
+
+void define_meal_plan_command() {
+    if (!select_all_selfs()) {
+        printf("There is no self!\n");
+        printf("Please define self first!\n");
+        return;
+    }
+
+    if (!select_all_foods()) {
+        printf("There is no food!\n");
+        printf("Please define food first!\n");
+        return;
+    }
+
+    int self_id;
+    int food_id;
+    long long int date;
+    int count;
+    
+    printf("Enter self id: ");
+    scanf("%d", &self_id);
+    Self self;
+    self.self_id = self_id;
+    if (!select_self_by_id(&self)) {
+        printf("There is no self with id %d!\n", self_id);
+        return;
+    }
+    printf("Enter food id: ");
+    scanf("%d", &food_id);
+    Food food;
+    food.food_id = food_id;
+    if (!select_food_by_id(&food)) {
+        printf("There is no food with id %d!\n", food_id);
+        return;
+    }
+    printf("Enter date: ");
+    scanf("%lld", &date);
+    printf("Enter count: ");
+    scanf("%d", &count);
+    if (count < 0) {
+        printf("Count must be greater than 0!\n");
+        return;
+    }
+
+    MealPlan meal_plan;
+    meal_plan.self = &self;
+    meal_plan.food = &food;
+    meal_plan.date = date;
+    meal_plan.count = count;
+
+    insert_meal_plan(&meal_plan);
+}
+
+void delete_meal_plan_command() {
+    int meal_plan_id;
+    printf("Which one of the meal plan you want to delete?\n");
+    printf("Enter meal plan id : ");
+    scanf("%d", &meal_plan_id);
+    char answer;
+    scanf(" %c", &answer);
+    printf("Are you sure you want to delete meal plan with id %d? (y/n): ", meal_plan_id);
+    if (answer == 'n') {
+        return;
+    }
+    MealPlan meal_plan;
+    meal_plan.meal_plan_id = meal_plan_id;
+    delete_meal_plan(&meal_plan);
 }
 #endif

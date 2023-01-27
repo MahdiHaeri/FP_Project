@@ -39,8 +39,8 @@ void admin_login_menu() {
     printf("~/Login/\n");
     printf("1. Student management\n");
     printf("2. Food management\n");
-    printf("3. Meal management\n");
-    printf("4. Self management\n");
+    printf("3. Self management\n");
+    printf("4. Meal Plan management\n");
     printf("5. Profile\n");
     printf("0. logout\n");
 }
@@ -81,16 +81,6 @@ void admin_food_management_menu() {
     printf("0. Back\n");
 }
 
-// login as admin/ Meal management/
-void admin_meal_management_menu() {
-    printf("~/Login/Meal management/\n");
-    printf("1. Add Meal\n");
-    printf("2. Remove Meal\n");
-    printf("3. Insert Food to Meal\n");
-    printf("4. Remove Food from Meal\n");
-    printf("0. Back\n");
-}
-
 // login as admin/ Self management/
 void admin_self_management_menu() {
     printf("~/Login/Self management/\n");
@@ -98,6 +88,15 @@ void admin_self_management_menu() {
     printf("2. Remove Self\n");
     printf("0. Back\n");
 }
+
+// login as admin/ Meal management/
+void admin_meal_plan_management_menu() {
+    printf("~/Login/Meal management/\n");
+    printf("1. Add Meal Plan\n");
+    printf("2. Remove Meal Plan\n");
+    printf("0. Back\n");
+}
+
 
 // login as student/ Profile/
 void admin_profile_menu() {
