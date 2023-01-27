@@ -118,6 +118,7 @@ void handel_student_reserve_menu() {
                 break;
             case 4:
                 // show reserve
+                show_reserve_command();
                 break;
             case BACK:
                 break_flag = true;

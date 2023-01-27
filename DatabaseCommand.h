@@ -667,4 +667,10 @@ void show_profile_command() {
         return;
     }
 }
+
+void show_reserve_command() {
+    if (!select_reserve_by_user_id(current_user)) {
+        printf("There is no reserve for this user!\n");
+    }
+}
 #endif

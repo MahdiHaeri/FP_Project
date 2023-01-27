@@ -724,4 +724,21 @@ bool select_self_meal_plans_to_student(Self* self) {
     return true;
 }
 
+bool select_reserve_by_user_id(User* user) {
+    char query[MAX_QUERY_SIZE];
+    sprintf(query, "SELECT * FROM Reserve WHERE user_id = %d;", user->user_id);
+    if (mysql_query(con, query)) {
+        finish_with_error(con);
+    }
+    MYSQL_RES* result = mysql_store_result(con);
+    if (result == NULL) {
+        finish_with_error(con);
+    }
+    if (mysql_num_rows(result) == 0) {
+        return false;
+    }
+    print_select_result(*result);
+    return true;
+}
+
 #endif

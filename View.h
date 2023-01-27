@@ -186,7 +186,11 @@ void print_select_result(MYSQL_RES result) {
     const char* row_data[num_fields];
     while ((row = mysql_fetch_row(&result))) {
         for (int i = 0; i < num_fields; i++) {
-            row_data[i] = row[i];
+            if (row[i] == NULL) {
+                row_data[i] = "NULL";
+            } else {
+                row_data[i] = row[i];
+            }
         }
         ft_row_write_ln(table, num_fields, row_data);
     }
