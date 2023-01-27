@@ -39,6 +39,10 @@ void handle_student_profile_menu() {
                 // send charge 
                 send_charge_command();
                 break;
+            case 4:
+                // show profile
+                show_profile_command();
+                break;
             case BACK:
                 break_flag = true;
                 break;

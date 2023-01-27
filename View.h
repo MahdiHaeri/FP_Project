@@ -144,6 +144,7 @@ void student_profile_menu() {
     printf("1. Change Password\n");
     printf("2. Charge Account\n");
     printf("3. Send Charge\n");
+    printf("4. Show Profile\n");
     printf("0. Back\n");
 }
 
