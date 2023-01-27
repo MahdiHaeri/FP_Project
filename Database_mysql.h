@@ -283,7 +283,6 @@ bool select_user_by_id_and_password(User* user) {
     if (num_rows == 0) {
         return false;
     }
-    print_select_result(*result);
     MYSQL_ROW row;
     row = mysql_fetch_row(result);
     user->user_id = atoi(row[0]);

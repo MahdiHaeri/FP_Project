@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
-#include <time.h>
+#include "TimeLimit.h"
 
 typedef struct Self Self;
 
@@ -21,7 +21,11 @@ struct Self {
     char* name;
     char* location;
     int capacity;
-    char* type;
+    char* type; // boyish or girlish
+    char* meal; // lunch or dinner
+    TimeLimit lunch_time_limit;
+    TimeLimit dinner_time_limit;
+    bool is_open;
 };
 
 #endif
