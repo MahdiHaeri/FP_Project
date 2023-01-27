@@ -6,8 +6,8 @@
 typedef struct TimeLimit TimeLimit;
 
 struct TimeLimit {
-    long long int time_start;
-    long long int time_end;
+    long long int start_time;
+    long long int end_time;
 };
 
 #endif

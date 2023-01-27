@@ -158,13 +158,15 @@ void handel_admin_self_management_menu() {
         scanf("%d", &choice);
         switch(choice) {
             case 1:
-                // change password
+                // define new self
+                define_self_command();
                 break;
             case 2:
-                // change phone number
+                // remove self from database
+                
                 break;
             case 3:
-                // change email
+
                 break;
             case BACK:
                 break_flag = true;
@@ -283,7 +285,7 @@ void handel_admin_login_menu() {
                 break;
             case 4:
                 // handel self management
-                // handel_admin_food_management_menu();
+                handel_admin_self_management_menu();
                 break;
             case 5:
                 // handel profile

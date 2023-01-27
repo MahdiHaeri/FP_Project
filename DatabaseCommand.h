@@ -4,7 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sqlite3.h>
+#include <stdbool.h>
+// #include <sqlite3.h>
 #include "User.h"
 #include "Reserve.h"
 #include "Food.h"
@@ -12,6 +13,7 @@
 // #include "Database.h"
 #include "Database_mysql.h"
 #include "Controller.h"
+#include "TimeLimit.h"
 
 void handel_student_login_menu();
 void handel_admin_login_menu();  
@@ -163,6 +165,7 @@ void change_current_user_password_command() {
 }
 
 void approve_user_command() {
+    select_deactive_users();
     int user_id;
     printf("Whose User do you want to approve?\n");
     printf("Enter User id: ");
@@ -285,6 +288,51 @@ void send_charge_command() {
     charge_user_account(&user, amount);
     charge_user_account(current_user, -amount);
     current_user->balance -= amount;
+}
+
+// ----------------- Self -----------------
+
+void define_self_command() {
+    int self_id;
+    char name[MAX_ARRAY_SIZE];
+    char location[MAX_ARRAY_SIZE];
+    int capacity;
+    char type[MAX_ARRAY_SIZE]; // boyish, girlish
+    char meal[MAX_ARRAY_SIZE]; // lunch, dinner
+    TimeLimit lunch_time_limit;
+    TimeLimit dinner_time_limit;
+    bool is_open = true;
+
+    printf("Enter self id: ");
+    scanf("%d", &self_id);
+    printf("Enter self name: ");
+    scanf(" %s", name);
+    printf("Enter self location: ");
+    scanf(" %s", location);
+    printf("Enter self capacity: ");
+    scanf("%d", &capacity);
+    printf("Enter self type: ");
+    scanf(" %s", type);
+    printf("Enter self meal: ");
+    scanf(" %s", meal);
+    printf("Enter self lunch time limit: ");
+    scanf("%lld %lld", &lunch_time_limit.start_time, &lunch_time_limit.end_time);
+    printf("Enter self dinner time limit: ");
+    scanf("%lld %lld", &dinner_time_limit.start_time, &dinner_time_limit.end_time);
+
+    Self self;
+    self.self_id = self_id;
+    self.name = name;
+    self.location = location;
+    self.capacity = capacity;
+    self.type = type;
+    self.meal = meal;
+    self.lunch_time_limit = lunch_time_limit;
+    self.dinner_time_limit = dinner_time_limit;
+    self.is_open = is_open;
+    
+    insert_self(&self);
+    
 }
 
 

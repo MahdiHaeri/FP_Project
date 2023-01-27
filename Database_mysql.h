@@ -9,6 +9,7 @@
 #include "Reserve.h"
 #include "Food.h"
 #include "Self.h"
+#include "TimeLimit.h"
 
 #define MAX_QUERY_SIZE 1000
 #define LOGIN 1
@@ -89,6 +90,7 @@ void create_Self_table() {
     "lunch_end_time	INTEGER," \
     "dinner_start_time	INTEGER," \
     "dinner_finish_time	INTEGER," \
+    "is_open     BOOLEAN," \
     "PRIMARY KEY(self_id));";
     if (mysql_query(con, query)) {
         finish_with_error(con);
@@ -269,6 +271,62 @@ void show_user_reserve(User* user) {
     }
 }
 
+// ------------------ Food ------------------ //
+
+void insert_food(Food* food) {
+    char query[MAX_QUERY_SIZE];
+    sprintf(query, "INSERT INTO Food VALUES(%d, '%s', '%s', %d);", 
+            food->food_id,
+            food->name,
+            food->type,
+            food->price);
+    if (mysql_query(con, query)) {
+        finish_with_error(con);
+    }
+}
+
+void delete_food(Food* food) {
+    char query[MAX_QUERY_SIZE];
+    sprintf(query, "DELETE FROM Food WHERE food_id = %d;", food->food_id);
+    if (mysql_query(con, query)) {
+        finish_with_error(con);
+    }
+}
+
+void change_food_price(Food* food, int new_price) {
+    char query[MAX_QUERY_SIZE];
+    sprintf(query, "UPDATE Food SET price = %d WHERE food_id = %d;", new_price, food->food_id);
+    if (mysql_query(con, query)) {
+        finish_with_error(con);
+    }
+}
+
+// ------------------ Self ------------------ //
+
+// insert self to database
+void insert_self(Self* self) {
+    char query[MAX_QUERY_SIZE];
+    sprintf(query, "INSERT INTO Self VALUES (%d, '%s', '%s', %d, '%s', '%s', %lld, %lld, %lld, %lld, %d);",
+            self->self_id,
+            self->name,
+            self->location,
+            self->capacity,
+            self->type,
+            self->meal,
+            self->lunch_time_limit.start_time,
+            self->lunch_time_limit.end_time,
+            self->dinner_time_limit.start_time,
+            self->dinner_time_limit.end_time,
+            self->is_open);
+
+    if (mysql_query(con, query)) {
+        finish_with_error(con);
+    }
+
+}
+
+// ------------------ Selects ------------------ //
+
 bool select_user_by_id_and_password(User* user) {
     char query[MAX_QUERY_SIZE];
     sprintf(query, "SELECT * FROM User WHERE user_id = %d AND password = '%s';", user->user_id, user->password);
@@ -311,34 +369,16 @@ void select_all_users() {
     print_select_result(*result);
 }
 
-// ------------------ Food ------------------ //
-
-void insert_food(Food* food) {
-    char query[MAX_QUERY_SIZE];
-    sprintf(query, "INSERT INTO Food VALUES(%d, '%s', '%s', %d);", 
-            food->food_id,
-            food->name,
-            food->type,
-            food->price);
+void select_deactive_users() {
+    char query[MAX_QUERY_SIZE] = "SELECT * FROM User WHERE status = 'deactive';";
     if (mysql_query(con, query)) {
         finish_with_error(con);
     }
-}
-
-void delete_food(Food* food) {
-    char query[MAX_QUERY_SIZE];
-    sprintf(query, "DELETE FROM Food WHERE food_id = %d;", food->food_id);
-    if (mysql_query(con, query)) {
+    MYSQL_RES* result = mysql_store_result(con);
+    if (result == NULL) {
         finish_with_error(con);
     }
-}
-
-void change_food_price(Food* food, int new_price) {
-    char query[MAX_QUERY_SIZE];
-    sprintf(query, "UPDATE Food SET price = %d WHERE food_id = %d;", new_price, food->food_id);
-    if (mysql_query(con, query)) {
-        finish_with_error(con);
-    }
+    print_select_result(*result);
 }
 
 #endif
