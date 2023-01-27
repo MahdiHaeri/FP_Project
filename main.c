@@ -17,7 +17,7 @@ int main(int argc, char const *argv[]) {
     init_database();
     User user = {"admin", "admin", 1, "admin", "admin", 0, "admin", "admin", "active", "logout", 0};
     insert_user(&user);
-
+    printf("Welcome to the restaurant reservation system\n");
     handel_main_menu();
     return 0;
 }

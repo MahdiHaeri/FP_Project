@@ -138,7 +138,6 @@ void create_tables() {
     create_reserve_table();
     create_meal_plan_table();
     create_food_plan_connector_table();
-    printf("Tables created successfully\n");
 }
 
 void init_database() {
@@ -284,6 +283,7 @@ bool select_user_by_id_and_password(User* user) {
     if (num_rows == 0) {
         return false;
     }
+    print_select_result(*result);
     MYSQL_ROW row;
     row = mysql_fetch_row(result);
     user->user_id = atoi(row[0]);
@@ -298,6 +298,18 @@ bool select_user_by_id_and_password(User* user) {
     strcpy(user->login_logout, row[9]);
     user->balance = atoi(row[10]);
     return true;
+}
+
+void select_all_users() {
+    char query[MAX_QUERY_SIZE] = "SELECT * FROM User;";
+    if (mysql_query(con, query)) {
+        finish_with_error(con);
+    }
+    MYSQL_RES* result = mysql_store_result(con);
+    if (result == NULL) {
+        finish_with_error(con);
+    }
+    print_select_result(*result);
 }
 
 // ------------------ Food ------------------ //

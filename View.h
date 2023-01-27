@@ -4,11 +4,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sqlite3.h>
 #include "User.h"
 #include "Reserve.h"
 #include "Food.h"
 #include "Self.h"
+#include "mysql/mysql.h"
+#include "fort.h"
 
 #define MAX_QUERY_SIZE 1000
 
@@ -25,7 +26,6 @@ int callback(void* data, int argc, char** argv, char** azColName) {
 
 //
 void main_menu() {
-    printf("Welcome to the restaurant reservation system\n");
     printf("~/\n");
     printf("1. Login\n");
     printf("2. Register\n");
@@ -153,5 +153,33 @@ void print_user_info(User* user) {
     printf("user balance: %d\n", user->balance);
 }
 
+// -----------------------------------------------
+
+// print result of select query in a table
+void print_select_result(MYSQL_RES result) {
+    MYSQL_ROW row;
+    MYSQL_FIELD* field;
+    int num_fields = mysql_num_fields(&result);
+    int num_rows = mysql_num_rows(&result);
+
+    const char* field_names[num_fields];
+    for (int i = 0; i < num_fields; i++) {
+        field = mysql_fetch_field(&result);
+        field_names[i] = field->name;
+    }
+    ft_table_t* table = ft_create_table();
+    ft_set_border_style(table, FT_BASIC2_STYLE);
+    ft_row_write_ln(table, num_fields, field_names);
+    const char* row_data[num_fields];
+    while ((row = mysql_fetch_row(&result))) {
+        for (int i = 0; i < num_fields; i++) {
+            row_data[i] = row[i];
+        }
+        ft_row_write_ln(table, num_fields, row_data);
+    }
+    // ft_print_table(table);
+    printf("%s\n", ft_to_string(table));
+    ft_destroy_table(table);
+}
     
 #endif
