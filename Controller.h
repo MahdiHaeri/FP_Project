@@ -362,7 +362,8 @@ void handel_student_login_menu() {
                 handle_student_profile_menu();
                 break;
             case 2:
-                handle_student_check_poll_menu();
+                // check news
+                show_news_table_command();
                 break;
             case 3:
                 handel_student_check_news_menu();

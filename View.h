@@ -29,7 +29,7 @@ void main_menu() {
     printf("~/\n");
     printf("1. Login\n");
     printf("2. Register\n");
-    printf("3. Exit\n");
+    printf("0. Exit\n");
 }
 
 // -----------------------------------------------
@@ -105,7 +105,7 @@ void admin_meal_plan_management_menu() {
 }
 
 
-// login as student/ Profile/
+// login as admin/ Profile/
 void admin_profile_menu() {
     printf("~/Login/Profile/\n");
     printf("1. Change Password\n");
