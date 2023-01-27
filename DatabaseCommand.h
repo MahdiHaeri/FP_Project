@@ -598,24 +598,27 @@ void reserve_in_self_command() {
     scanf("%d", &meal_plan_id);
     MealPlan meal_plan;
     meal_plan.meal_plan_id = meal_plan_id;
-    // if (!select_meal_plan_by_id(&meal_plan)) {
-    //     printf("There is no meal plan with id %d!\n", meal_plan_id);
-    //     return;
-    // }
+    if (!select_meal_plan_by_id(&meal_plan)) {
+        printf("There is no meal plan with id %d!\n", meal_plan_id);
+        return;
+    }
     // if (meal_plan.self->self_id != self.self_id) {
     //     printf("There is no meal plan with id %d in this self!\n", meal_plan_id);
     //     return;
     // }
-    // if (meal_plan.count == 0) {
-    //     printf("There is no food in this meal plan!\n");
-    //     return;
-    // }
-    // meal_plan.count--;
-    // update_meal_plan(&meal_plan);
-    // ReserveInSelf reserve_in_self;
-    // reserve_in_self.student = current_user;
-    // reserve_in_self.meal_plan = &meal_plan;
-    // insert_reserve_in_self(&reserve_in_self);
+    if (meal_plan.count == 0) {
+        printf("There is no food in this meal plan!\n");
+        return;
+    }
+    meal_plan.count--;
+    update_meal_plan_count(&meal_plan);
+    Reserve reserve_in_self;
+    reserve_in_self.user = current_user;
+    reserve_in_self.meal_plan = &meal_plan;
+    reserve_in_self.date = get_current_time();
+    reserve_in_self.status = "Not Taken";
+    reserve_in_self.agent = NULL;
+    insert_reserve(&reserve_in_self);
 }
 
 

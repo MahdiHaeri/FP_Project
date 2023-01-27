@@ -103,11 +103,13 @@ void create_Self_table() {
 
 void create_reserve_table() {
     char query[MAX_QUERY_SIZE] = "CREATE TABLE IF NOT EXISTS Reserve (" \
-    "reserve_id	INTEGER NOT NULL," \
-    "self_id	INTEGER NOT NULL," \
+    "reserve_id	INTEGER NOT NULL AUTO_INCREMENT," \
+    "user_id	INTEGER NOT NULL," \
+    "meal_plan_id	INTEGER NOT NULL," \
     "date	INTEGER," \
-    "meal	INTEGER," \
-    "food_id	INTEGER NOT NULL," \
+    "status	TEXT," \
+    "agent_id	INTEGER," \
+    "UNIQUE INDEX(user_id, meal_plan_id)," \
     "PRIMARY KEY(reserve_id));";
     if (mysql_query(con, query)) {
         finish_with_error(con);
@@ -241,40 +243,6 @@ void deactivate_user(User* user) {
 void charge_user_account(User* user, int amount) {
     char query[MAX_QUERY_SIZE];
     sprintf(query, "UPDATE User SET balance = balance + %d WHERE user_id = %d;", amount, user->user_id);
-    if (mysql_query(con, query)) {
-        finish_with_error(con);
-    }
-}
-
-// reserve food
-void reserve_food(Reserve* reserve) {
-    char query[MAX_QUERY_SIZE];
-    sprintf(query, "INSERT INTO Reserve VALUES (%d, %d, %lld, %d, %d);",
-            reserve->reserve_id,
-            reserve->self_id,
-            reserve->date,
-            reserve->meal,
-            reserve->food_id);
-    if (mysql_query(con, query)) {
-        finish_with_error(con);
-    }
-}
-
-// cancel reserve
-void cancel_reserve(Reserve* reserve) {
-    char query[MAX_QUERY_SIZE];
-    sprintf(query, "DELETE FROM Reserve WHERE reserve_id = %d;", reserve->reserve_id);
-    if (mysql_query(con, query)) {
-        finish_with_error(con);
-    }
-}
-
-
-
-// show user's reserve
-void show_user_reserve(User* user) {
-    char query[MAX_QUERY_SIZE];
-    sprintf(query, "SELECT * FROM Reserve WHERE user_id = %d;", user->user_id);
     if (mysql_query(con, query)) {
         finish_with_error(con);
     }
@@ -429,6 +397,62 @@ void delete_meal_plan(MealPlan* meal_plan) {
     }
 }
 
+bool select_meal_plan_by_id(MealPlan* meal_plan) {
+    char query[MAX_QUERY_SIZE];
+    sprintf(query, "SELECT * FROM MealPlan WHERE meal_plan_id = %d;", meal_plan->meal_plan_id);
+    if (mysql_query(con, query)) {
+        finish_with_error(con);
+    }
+    MYSQL_RES* result = mysql_store_result(con);
+    if (result == NULL) {
+        finish_with_error(con);
+    }
+    int num_fields = mysql_num_fields(result);
+    MYSQL_ROW row;
+    if ((row = mysql_fetch_row(result))) {
+        // meal_plan->self = select_self_by_id(atoi(row[1]));
+        // meal_plan->food = select_food_by_id(atoi(row[2]));
+        meal_plan->date = atoll(row[3]);
+        meal_plan->count = atoi(row[4]);
+        return true;
+    }
+    return false;
+}
+
+void update_meal_plan_count(MealPlan* meal_plan) {
+    char query[MAX_QUERY_SIZE];
+    sprintf(query, "UPDATE MealPlan SET count = %d WHERE meal_plan_id = %d;",
+            meal_plan->count,
+            meal_plan->meal_plan_id);
+    if (mysql_query(con, query)) {
+        finish_with_error(con);
+    }
+}
+
+
+// ------------------ Reserve ------------------ //
+void insert_reserve(Reserve* reserve) {
+    char query[MAX_QUERY_SIZE];
+    sprintf(query, "INSERT IGNORE INTO Reserve VALUES (%s, %d, %d, %lld, '%s', %s);",
+            "NULL",
+            reserve->user->user_id,
+            reserve->meal_plan->meal_plan_id,
+            reserve->date,
+            reserve->status,
+            "NULL");
+    if (mysql_query(con, query)) {
+        finish_with_error(con);
+    }
+}
+
+// cancel reserve
+void delete_reserve(Reserve* reserve) {
+    char query[MAX_QUERY_SIZE];
+    sprintf(query, "DELETE FROM Reserve WHERE reserve_id = %d;", reserve->reserve_id);
+    if (mysql_query(con, query)) {
+        finish_with_error(con);
+    }
+}
 
 // ------------------ Selects ------------------ //
 

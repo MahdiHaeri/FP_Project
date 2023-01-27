@@ -5,6 +5,8 @@
 #include <string.h>
 #include <stdbool.h>
 #include <time.h>
+#include "User.h"
+#include "MealPlan.h"
 
 typedef struct Reserve Reserve;
 
@@ -18,10 +20,11 @@ typedef struct Reserve Reserve;
 
 struct Reserve {
     int reserve_id;
-    int self_id;
+    User* user;
+    MealPlan* meal_plan;
     long long int date;
-    int meal;
-    int food_id;
+    char* status;
+    User* agent;
 };
 
 #endif
