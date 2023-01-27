@@ -257,6 +257,18 @@ void handel_admin_student_management_menu() {
             case 5:
                 // charge student account 
                 charge_user_account_with_admin_command();
+            case 6:
+                // add poll 
+                // add_poll_command();
+                // break;
+            case 7:
+                // add news 
+                add_news_command();
+                break;
+            case 8:
+                // delete news
+                delete_news_command();
+                break;
             case BACK:
                 break_flag = true;
                 break;

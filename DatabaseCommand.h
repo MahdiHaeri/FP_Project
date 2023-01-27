@@ -14,6 +14,7 @@
 #include "Database_mysql.h"
 #include "Controller.h"
 #include "TimeLimit.h"
+#include "News.h"
 
 void handel_student_login_menu();
 void handel_admin_login_menu();  
@@ -24,7 +25,14 @@ void handel_admin_login_menu();
 #define LOGIN 1
 #define LOGOUT 0
 
+typedef long long int llint;
+
 User* current_user;
+llint* current_time;
+
+llint get_current_time() {
+    return 0;
+}
 
 void register_user_command(char* user_type, char* user_status) {
     // define variables
@@ -358,5 +366,59 @@ void delete_self_command() {
     delete_self(&self);
 }
 
+// ----------------- News -----------------
+
+// add new news
+void add_news_command() {
+    char title[MAX_ARRAY_SIZE];
+    char content[MAX_ARRAY_SIZE];
+    TimeLimit time_limit;
+    time_limit.start_time = get_current_time();
+
+    printf("Enter news title: ");
+
+    // get rid of newline
+    getchar();
+    fgets(title, MAX_ARRAY_SIZE, stdin);
+    title[strlen(title) - 1] = '\0';
+    
+    // get rid of newline
+    printf("Enter news content: ");
+    fgets(content, MAX_ARRAY_SIZE, stdin);
+    content[strlen(content) - 1] = '\0';
+    
+    printf("Enter news end date: ");
+    scanf("%lld", &time_limit.end_time);
+
+    if (time_limit.end_time < time_limit.start_time) {
+        printf("End date must be greater than start date!\n");
+        return;
+    }
+    
+    News news;
+    news.title = title;
+    news.content = content;
+    news.time_limit = time_limit;
+    news.user = current_user;
+
+    insert_news(&news);
+}
+
+// delete news
+void delete_news_command() {
+    int news_id;
+    printf("Which one of the news you want to delete?\n");
+    printf("Enter news id : ");
+    scanf("%d", &news_id);
+    printf("Are you sure you want to delete news with id %d? (y/n): ", news_id);
+    char answer;
+    scanf(" %c", &answer);
+    if (answer == 'n') {
+        return;
+    }
+    News news;
+    news.news_id = news_id;
+    delete_news(&news);
+}
 
 #endif

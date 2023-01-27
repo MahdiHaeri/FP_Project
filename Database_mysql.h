@@ -10,6 +10,7 @@
 #include "Food.h"
 #include "Self.h"
 #include "TimeLimit.h"
+#include "News.h"
 
 #define MAX_QUERY_SIZE 1000
 #define LOGIN 1
@@ -133,6 +134,20 @@ void create_food_plan_connector_table() {
     }
 }
 
+void create_news_table() {
+    char query[MAX_QUERY_SIZE] = "CREATE TABLE IF NOT EXISTS News (" \
+    "news_id	INTEGER NOT NULL AUTO_INCREMENT," \
+    "title	TEXT," \
+    "content	TEXT," \
+    "start_date	INTEGER," \
+    "end_date	INTEGER," \
+    "author_id	INTEGER," \
+    "PRIMARY KEY(news_id));";
+    if (mysql_query(con, query)) {
+        finish_with_error(con);
+    }
+}
+
 void create_tables() {
     create_user_table();
     create_food_table();
@@ -140,6 +155,7 @@ void create_tables() {
     create_reserve_table();
     create_meal_plan_table();
     create_food_plan_connector_table();
+    create_news_table();
 }
 
 void init_database() {
@@ -327,6 +343,30 @@ void insert_self(Self* self) {
 void delete_self(Self* self) {
     char query[MAX_QUERY_SIZE];
     sprintf(query, "DELETE FROM Self WHERE self_id = %d;", self->self_id);
+    if (mysql_query(con, query)) {
+        finish_with_error(con);
+    }
+}
+
+// ------------------ News ------------------ //
+
+void insert_news(News* news) {
+    char query[MAX_QUERY_SIZE];
+    sprintf(query, "INSERT INTO News VALUES (%s, '%s', '%s', %lld, %lld, %d)",
+            "NULL",
+            news->title,
+            news->content,
+            news->time_limit.start_time,
+            news->time_limit.end_time,
+            news->user->user_id);
+    if (mysql_query(con, query)) {
+        finish_with_error(con);
+    }
+}
+
+void delete_news(News* news) {
+    char query[MAX_QUERY_SIZE];
+    sprintf(query, "DELETE FROM News WHERE news_id = %d;", news->news_id);
     if (mysql_query(con, query)) {
         finish_with_error(con);
     }
