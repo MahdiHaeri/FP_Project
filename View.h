@@ -86,6 +86,8 @@ void admin_meal_management_menu() {
     printf("~/Login/Meal management/\n");
     printf("1. Add Meal\n");
     printf("2. Remove Meal\n");
+    printf("3. Insert Food to Meal\n");
+    printf("4. Remove Food from Meal\n");
     printf("0. Back\n");
 }
 

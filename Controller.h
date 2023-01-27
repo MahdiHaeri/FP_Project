@@ -194,7 +194,12 @@ void handel_admin_meal_management_menu() {
                 delete_meal_command();
                 break;
             case 3:
-                // change email
+                // insert food to meal 
+                define_meal_food_connector_command();
+                break;
+            case 4:
+                // remove food from meal
+                delete_meal_food_connector_command();
                 break;
             case BACK:
                 break_flag = true;

@@ -12,6 +12,7 @@
 #include "TimeLimit.h"
 #include "News.h"
 #include "Meal.h"
+#include "MealFoodConnector.h"
 
 #define MAX_QUERY_SIZE 1000
 #define LOGIN 1
@@ -159,6 +160,18 @@ void create_meal_table() {
     }
 }
 
+void create_meal_food_connector_table() {
+    char query[MAX_QUERY_SIZE] = "CREATE TABLE IF NOT EXISTS MealFoodConnector (" \
+    "connector_id	INTEGER NOT NULL AUTO_INCREMENT," \
+    "meal_id	INTEGER NOT NULL," \
+    "food_id	INTEGER NOT NULL," \
+    "PRIMARY KEY(connector_id));";
+    if (mysql_query(con, query)) {
+        finish_with_error(con);
+    }
+}
+
+
 void create_tables() {
     create_user_table();
     create_food_table();
@@ -168,6 +181,7 @@ void create_tables() {
     create_food_plan_connector_table();
     create_news_table();
     create_meal_table();
+    create_meal_food_connector_table();
 }
 
 void init_database() {
@@ -404,6 +418,27 @@ void delete_meal(Meal* meal) {
     }
 }
 
+// ------------------ meal food connector ------------------ //
+
+void insert_meal_food_connector(MealFoodConnector* meal_food_connector) {
+    char query[MAX_QUERY_SIZE];
+    sprintf(query, "INSERT INTO MealFoodConnector VALUES (%s, %d, %d);",
+            "NULL",
+            meal_food_connector->meal->meal_id,
+            meal_food_connector->food->food_id);
+    if (mysql_query(con, query)) {
+        finish_with_error(con);
+    }
+}
+
+void delete_meal_food_connector(MealFoodConnector* meal_food_connector) {
+    char query[MAX_QUERY_SIZE];
+    sprintf(query, "DELETE FROM MealFoodConnector WHERE meal_food_connector_id = %d;", meal_food_connector->connector_id);
+    if (mysql_query(con, query)) {
+        finish_with_error(con);
+    }
+}
+
 // ------------------ Selects ------------------ //
 
 bool select_user_by_id_and_password(User* user) {
@@ -463,6 +498,38 @@ void select_deactive_users() {
 bool select_public_info_of_user(User* user) {
     char query[MAX_QUERY_SIZE];
     sprintf(query, "SELECT user_id, name, family, balance, gender FROM User WHERE user_id = %d;", user->user_id);
+    if (mysql_query(con, query)) {
+        finish_with_error(con);
+    }
+    MYSQL_RES* result = mysql_store_result(con);
+    if (result == NULL) {
+        finish_with_error(con);
+    }
+    if (mysql_num_rows(result) == 0) {
+        return false;
+    }
+    print_select_result(*result);
+    return true;
+}
+
+bool select_all_foods() {
+    char query[MAX_QUERY_SIZE] = "SELECT * FROM Food;";
+    if (mysql_query(con, query)) {
+        finish_with_error(con);
+    }
+    MYSQL_RES* result = mysql_store_result(con);
+    if (result == NULL) {
+        finish_with_error(con);
+    }
+    if (mysql_num_rows(result) == 0) {
+        return false;
+    }
+    print_select_result(*result);
+    return true;
+}
+
+bool select_all_meals() {
+    char query[MAX_QUERY_SIZE] = "SELECT * FROM Meal;";
     if (mysql_query(con, query)) {
         finish_with_error(con);
     }
