@@ -140,6 +140,15 @@ void handel_admin_profile_menu() {
                 // add new admin 
                 register_user_command("admin", "active");
                 break;
+            case 4:
+                // show admins table
+                show_admins_table_command();
+                break;
+            case 5:
+                // show profile
+                show_profile_command();
+                break;
+                
             case BACK:
                 break_flag = true;
                 break;
@@ -166,7 +175,8 @@ void handel_admin_meal_plan_management_menu() {
                 delete_meal_plan_command();
                 break;
             case 3:
-                // change email
+                // show meal plans table
+                show_meal_plans_table_command();
                 break;
             case BACK:
                 break_flag = true;
@@ -194,7 +204,8 @@ void handel_admin_self_management_menu() {
                 delete_self_command();
                 break;
             case 3:
-
+                // show self table
+                show_selfs_table_command();
                 break;
             case BACK:
                 break_flag = true;
@@ -224,6 +235,10 @@ void handel_admin_food_management_menu() {
             case 3:
                 // change food price 
                 change_food_price_command();
+                break;
+            case 4:
+                // show foods table
+                show_foods_table_command();
                 break;
             case BACK:
                 break_flag = true;
@@ -270,6 +285,22 @@ void handel_admin_student_management_menu() {
             case 8:
                 // delete news
                 delete_news_command();
+                break;
+            case 9:
+                // add poll
+                // add_poll_command();
+                break;
+            case 10:
+                // show student table
+                show_students_table_command();
+                break;
+            case 11:
+                // show news table
+                show_news_table_command();
+                break;
+            case 12:
+                // show poll table
+                // 
                 break;
             case BACK:
                 break_flag = true;

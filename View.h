@@ -68,7 +68,11 @@ void admin_student_management_menu() {
     printf("5. Charge Student Account\n");
     printf("6. Take Student Report\n");
     printf("7. Add News\n");
-    printf("8. Add Poll\n");
+    printf("8. Remove News\n");
+    printf("9. Add Poll\n");
+    printf("10. Show Student Table\n");
+    printf("11. Show News Table\n");
+    printf("12. Show Poll Table\n");
     printf("0. Back\n");
 }
 
@@ -78,6 +82,7 @@ void admin_food_management_menu() {
     printf("1. ADD Food\n");
     printf("2. Remove Food\n");
     printf("3. Change Food Price\n");
+    printf("4. Show Foods Table\n");
     printf("0. Back\n");
 }
 
@@ -86,6 +91,7 @@ void admin_self_management_menu() {
     printf("~/Login/Self management/\n");
     printf("1. Add Self\n");
     printf("2. Remove Self\n");
+    printf("3. Show Self Table\n");
     printf("0. Back\n");
 }
 
@@ -94,6 +100,7 @@ void admin_meal_plan_management_menu() {
     printf("~/Login/Meal management/\n");
     printf("1. Add Meal Plan\n");
     printf("2. Remove Meal Plan\n");
+    printf("3. Show Meal Plan Table\n");
     printf("0. Back\n");
 }
 
@@ -104,6 +111,8 @@ void admin_profile_menu() {
     printf("1. Change Password\n");
     printf("2. Charge Account\n");
     printf("3. Add Admin\n");
+    printf("4. Show Admin Table\n");
+    printf("5. Show Profile\n");
     printf("0. Back\n");
 }
 
@@ -156,7 +165,7 @@ void print_user_info(User* user) {
 
 // -----------------------------------------------
 
-// print result of select query in a table
+// print result of select query in a beautiful table
 void print_select_result(MYSQL_RES result) {
     MYSQL_ROW row;
     MYSQL_FIELD* field;

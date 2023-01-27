@@ -572,4 +572,49 @@ void delete_meal_plan_command() {
     meal_plan.meal_plan_id = meal_plan_id;
     delete_meal_plan(&meal_plan);
 }
+
+// ----------------- Show -----------------
+
+void show_students_table_command() {
+    if (!select_all_students()) {
+        printf("There is no student!\n");
+    }
+}
+
+void show_news_table_command() {
+    if (!select_all_news()) {
+        printf("There is no news!\n");
+    }
+}
+
+void show_foods_table_command() {
+    if (!select_all_foods()) {
+        printf("There is no food!\n");
+    }
+}
+
+void show_selfs_table_command() {
+    if (!select_all_selfs()) {
+        printf("There is no self!\n");
+    }
+}
+
+void show_meal_plans_table_command() {
+    if (!select_all_meal_plans()) {
+        printf("There is no meal plan!\n");
+    }
+}
+
+void show_admins_table_command() {
+    if (!select_all_admins()) {
+        printf("There is no admin!\n");
+    }
+}
+
+void show_profile_command() {
+    if (!select_user_by_id(current_user)) {
+        printf("There is no user with id %d!\n", current_user->user_id);
+        return;
+    }
+}
 #endif

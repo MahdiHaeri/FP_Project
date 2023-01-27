@@ -585,4 +585,85 @@ bool select_food_by_id(Food* food) {
     return true;
 }
 
+bool select_all_students() {
+    char query[MAX_QUERY_SIZE] = "SELECT * FROM User WHERE type = 'student';";
+    if (mysql_query(con, query)) {
+        finish_with_error(con);
+    }
+    MYSQL_RES* result = mysql_store_result(con);
+    if (result == NULL) {
+        finish_with_error(con);
+    }
+    if (mysql_num_rows(result) == 0) {
+        return false;
+    }
+    print_select_result(*result);
+    return true;
+}
+
+bool select_all_admins() {
+    char query[MAX_QUERY_SIZE] = "SELECT * FROM User WHERE type = 'admin';";
+    if (mysql_query(con, query)) {
+        finish_with_error(con);
+    }
+    MYSQL_RES* result = mysql_store_result(con);
+    if (result == NULL) {
+        finish_with_error(con);
+    }
+    if (mysql_num_rows(result) == 0) {
+        return false;
+    }
+    print_select_result(*result);
+    return true;
+}
+
+bool select_user_by_id(User* user) {
+    char query[MAX_QUERY_SIZE];
+    sprintf(query, "SELECT * FROM User WHERE user_id = %d;", user->user_id);
+    if (mysql_query(con, query)) {
+        finish_with_error(con);
+    }
+    MYSQL_RES* result = mysql_store_result(con);
+    if (result == NULL) {
+        finish_with_error(con);
+    }
+    if (mysql_num_rows(result) == 0) {
+        return false;
+    }
+    print_select_result(*result);
+    return true;
+}
+
+bool select_all_news() {
+    char query[MAX_QUERY_SIZE] = "SELECT * FROM News;";
+    if (mysql_query(con, query)) {
+        finish_with_error(con);
+    }
+    MYSQL_RES* result = mysql_store_result(con);
+    if (result == NULL) {
+        finish_with_error(con);
+    }
+    if (mysql_num_rows(result) == 0) {
+        return false;
+    }
+    print_select_result(*result);
+    return true;
+}
+
+bool select_all_meal_plans() {
+    char query[MAX_QUERY_SIZE] = "SELECT * FROM MealPlan;";
+    if (mysql_query(con, query)) {
+        finish_with_error(con);
+    }
+    MYSQL_RES* result = mysql_store_result(con);
+    if (result == NULL) {
+        finish_with_error(con);
+    }
+    if (mysql_num_rows(result) == 0) {
+        return false;
+    }
+    print_select_result(*result);
+    return true;
+}
+
 #endif
