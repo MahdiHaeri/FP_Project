@@ -119,8 +119,10 @@ void admin_profile_menu() {
 // login as student/ Reserve/
 void student_reserve_menu() {
     printf("~/Login/Reserve/\n");
-    printf("1. Reserve\n");
+    printf("1. Reserve In Self\n");
+    printf("2. Daily Reserve\n");
     printf("2. Cancel Reserve\n");
+    printf("4. Show Reserve Table\n");
     printf("0. Back\n");
 }
 

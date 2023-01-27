@@ -107,13 +107,17 @@ void handel_student_reserve_menu() {
         scanf("%d", &choice);
         switch(choice) {
             case 1:
-                // change password
+                // reserve in self 
+                reserve_in_self_command();
                 break;
             case 2:
-                // change phone number
+                // daily reserve
                 break;
             case 3:
-                // change email
+                // cancel reserve
+                break;
+            case 4:
+                // show reserve
                 break;
             case BACK:
                 break_flag = true;
@@ -359,14 +363,16 @@ void handel_student_login_menu() {
         scanf("%d", &choice);
         switch(choice) {
             case 1:
-                handle_student_profile_menu();
+                // Reserve meal
+                handel_student_reserve_menu();
                 break;
             case 2:
                 // check news
                 show_news_table_command();
+                // handel_student_check_news_menu();
                 break;
             case 3:
-                handel_student_check_news_menu();
+                // vote to poll
                 break;
             case 4:
                 // student profile

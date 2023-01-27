@@ -666,4 +666,38 @@ bool select_all_meal_plans() {
     return true;
 }
 
+bool select_selfs_with_same_genser(User* user) {
+    char query[MAX_QUERY_SIZE];
+    sprintf(query, "SELECT * FROM Self WHERE type Like '%c%%';", user->gender[0]);
+    if (mysql_query(con, query)) {
+        finish_with_error(con);
+    }
+    MYSQL_RES* result = mysql_store_result(con);
+    if (result == NULL) {
+        finish_with_error(con);
+    }
+    if (mysql_num_rows(result) == 0) {
+        return false;
+    }
+    print_select_result(*result);
+    return true;
+}
+
+bool select_self_meal_plans_to_student(Self* self) {
+    char query[MAX_QUERY_SIZE];
+    sprintf(query, "SELECT MealPlan.meal_plan_id, Food.name, Food.price, MealPlan.count, Food.type FROM MealPlan JOIN Food ON MealPlan.food_id = Food.food_id WHERE MealPlan.self_id = %d;", self->self_id);
+    if (mysql_query(con, query)) {
+        finish_with_error(con);
+    }
+    MYSQL_RES* result = mysql_store_result(con);
+    if (result == NULL) {
+        finish_with_error(con);
+    }
+    if (mysql_num_rows(result) == 0) {
+        return false;
+    }
+    print_select_result(*result);
+    return true;
+}
+
 #endif

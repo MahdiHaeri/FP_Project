@@ -573,6 +573,53 @@ void delete_meal_plan_command() {
     delete_meal_plan(&meal_plan);
 }
 
+// ----------------- Reserve In Self -----------------
+
+void reserve_in_self_command() {
+    if (!select_selfs_with_same_genser(current_user)) {
+        printf("There is no suitable self!\n");
+        return;
+    }
+    int self_id;
+    printf("Enter self id: ");
+    scanf("%d", &self_id);
+    Self self;
+    self.self_id = self_id;
+    if (!select_self_by_id(&self)) {
+        printf("There is no self with id %d!\n", self_id);
+        return;
+    }
+    if (!select_self_meal_plans_to_student(&self)) {
+        printf("There is no meal plan in this self!\n");
+        return;
+    }
+    int meal_plan_id;
+    printf("Enter meal plan id: ");
+    scanf("%d", &meal_plan_id);
+    MealPlan meal_plan;
+    meal_plan.meal_plan_id = meal_plan_id;
+    // if (!select_meal_plan_by_id(&meal_plan)) {
+    //     printf("There is no meal plan with id %d!\n", meal_plan_id);
+    //     return;
+    // }
+    // if (meal_plan.self->self_id != self.self_id) {
+    //     printf("There is no meal plan with id %d in this self!\n", meal_plan_id);
+    //     return;
+    // }
+    // if (meal_plan.count == 0) {
+    //     printf("There is no food in this meal plan!\n");
+    //     return;
+    // }
+    // meal_plan.count--;
+    // update_meal_plan(&meal_plan);
+    // ReserveInSelf reserve_in_self;
+    // reserve_in_self.student = current_user;
+    // reserve_in_self.meal_plan = &meal_plan;
+    // insert_reserve_in_self(&reserve_in_self);
+}
+
+
+
 // ----------------- Show -----------------
 
 void show_students_table_command() {
