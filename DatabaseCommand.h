@@ -9,7 +9,8 @@
 #include "Reserve.h"
 #include "Food.h"
 #include "Self.h"
-#include "Database.h"
+// #include "Database.h"
+#include "Database_mysql.h"
 #include "Controller.h"
 
 void handel_student_login_menu();
@@ -77,20 +78,22 @@ void login_user_command() {
     printf("Enter your password: ");
     scanf(" %s", user->password);
 
-    select_user_by_id_and_password(user);
 
-    if (user->name == NULL) {
-        printf("User not found, your user id or password is not correct!\n");
-    } else {
-        current_user = user;
+    if (select_user_by_id_and_password(user)) {
         printf("User found!\n");
+    } else {
+        printf("User not found, your user id or password is not correct!\n");
+        return;
     }
-    if (strcmp(user->status, "deactive") == 0) {
-        printf("Your account is deactive!\n");
+
+    if (strcmp(user->status, "active") != 0) {
+        printf("Your account is not active!\n");
     } else {
         if (strcmp(user->login_logout, "login") == 0) {
             printf("You are already logged in!\n");
+            return;
         } else {
+            current_user = user;
             user->login_logout = "login";
             login_user(user);
             if (strcmp(user->type, "student") == 0) {
@@ -265,6 +268,11 @@ void send_charge_command() {
     printf("Whose user do you want send charge?\n");
     printf("Enter user id: ");
     scanf("%d", &user_id);
+    if (user_id == current_user->user_id) {
+        printf("You can't send charge to yourself!\n");
+        return;
+    }
+    
     printf("Enter amount: ");
     scanf("%d", &amount);
     if (amount > current_user->balance) {

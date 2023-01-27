@@ -3,6 +3,7 @@
         "string.h": "c",
         "controller.h": "c",
         "stdio.h": "c",
-        "food.h": "c"
+        "food.h": "c",
+        "database.h": "c"
     }
 }
