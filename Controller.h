@@ -126,6 +126,10 @@ void handle_student_reserve_menu() {
                 define_agent_command();
                 break;
             case 6:
+                // show meal plan table
+                show_meal_plans_table_command();
+                break;
+            case 7:
                 // show reserve
                 show_reserve_command();
                 break;

@@ -37,6 +37,11 @@ llint get_current_time() {
     return 0;
 }
 
+void get_line(char* line) {
+    fgets(line, MAX_ARRAY_SIZE, stdin);
+    line[strlen(line) - 1] = '\0';
+}
+
 // ----------------- Show -----------------
 
 void show_students_table_command() {
@@ -104,9 +109,10 @@ void register_user_command(char* user_type, char* user_status) {
 
     // get input
     printf("Enter your name: ");
-    scanf(" %s", name);
+    getchar();
+    get_line(name);
     printf("Enter your family: ");
-    scanf(" %s", family);
+    get_line(family);
     printf("Enter your user id: ");
     scanf("%d", &user_id);
     printf("Enter your password: ");
@@ -284,7 +290,8 @@ void define_food_command() {
     printf("Enter food id: ");
     scanf("%d", &food_id);
     printf("Enter food name: ");
-    scanf(" %s", name);
+    getchar();
+    get_line(name);
     printf("Enter food price: ");
     scanf("%d", &price);
     printf("Enter food type: ");
@@ -378,9 +385,10 @@ void define_self_command() {
     printf("Enter self id: ");
     scanf("%d", &self_id);
     printf("Enter self name: ");
-    scanf(" %s", name);
+    getchar();
+    get_line(name);
     printf("Enter self location: ");
-    scanf(" %s", location);
+    get_line(location);
     printf("Enter self capacity: ");
     scanf("%d", &capacity);
     printf("Enter self type: ");
@@ -435,13 +443,10 @@ void add_news_command() {
 
     // get rid of newline
     getchar();
-    fgets(title, MAX_ARRAY_SIZE, stdin);
-    title[strlen(title) - 1] = '\0';
-    
+    get_line(title);    
     // get rid of newline
     printf("Enter news content: ");
-    fgets(content, MAX_ARRAY_SIZE, stdin);
-    content[strlen(content) - 1] = '\0';
+    get_line(content);
 
     printf("Enter news end date: ");
     scanf("%lld", &time_limit.end_time);
