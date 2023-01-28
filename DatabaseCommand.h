@@ -273,8 +273,15 @@ void charge_user_account_with_admin_command() {
 
 void charge_current_user_account_command() {
     int amount;
+    char card_number[MAX_ARRAY_SIZE];
+    char card_password[MAX_ARRAY_SIZE];
     printf("Enter amount: ");
     scanf("%d", &amount);
+    printf("Enter card number: ");
+    scanf(" %s", card_number);
+    printf("Enter card password: ");
+    scanf(" %s", card_password);
+
     charge_user_account(current_user, amount);
     current_user->balance += amount;
 }
