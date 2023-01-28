@@ -318,10 +318,11 @@ void handle_admin_student_management_menu() {
             case 5:
                 // charge student account 
                 charge_user_account_with_admin_command();
+                break;
             case 6:
                 // add poll 
                 // add_poll_command();
-                // break;
+                break;
             case 7:
                 // add news 
                 add_news_command();
