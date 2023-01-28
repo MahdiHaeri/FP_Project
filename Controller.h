@@ -76,7 +76,7 @@ void handle_student_check_poll_menu() {
     }
 }
 
-void handel_student_check_news_menu() {
+void handle_student_check_news_menu() {
     bool break_flag = false;
     int choice;
     while (!break_flag) {
@@ -99,7 +99,7 @@ void handel_student_check_news_menu() {
     }
 }
 
-void handel_student_reserve_menu() {
+void handle_student_reserve_menu() {
     bool break_flag = false;
     int choice;
     while (!break_flag) {
@@ -139,7 +139,7 @@ void handel_student_reserve_menu() {
     }
 }
 
-void handel_admin_profile_menu() {
+void handle_admin_profile_menu() {
     bool break_flag = false;
     int choice;
     while (!break_flag) {
@@ -177,7 +177,30 @@ void handel_admin_profile_menu() {
     }
 }
 
-void handel_admin_meal_plan_management_menu() {
+void handle_admin_report_menu() {
+    bool break_flag = false;
+    int choice;
+    while (!break_flag) {
+        admin_report_menu();
+        scanf("%d", &choice);
+        switch(choice) {
+            case 1:
+                // show daily report
+                reserve_food_report_command();
+                break;
+            case 2:
+                break;
+            case BACK:
+                break_flag = true;
+                break;
+            default:
+                printf("Invalid choice\n");
+                break;
+        };
+    }
+}
+
+void handle_admin_meal_plan_management_menu() {
     bool break_flag = false;
     int choice;
     while (!break_flag) {
@@ -206,7 +229,7 @@ void handel_admin_meal_plan_management_menu() {
     }
 }
 
-void handel_admin_self_management_menu() {
+void handle_admin_self_management_menu() {
     bool break_flag = false;
     int choice;
     while (!break_flag) {
@@ -235,7 +258,7 @@ void handel_admin_self_management_menu() {
     }
 }
 
-void handel_admin_food_management_menu() {
+void handle_admin_food_management_menu() {
     bool break_flag = false;
     int choice;
     while (!break_flag) {
@@ -268,7 +291,7 @@ void handel_admin_food_management_menu() {
     }
 }
 
-void handel_admin_student_management_menu() {
+void handle_admin_student_management_menu() {
     bool break_flag = false;
     int choice;
     while (!break_flag) {
@@ -330,7 +353,7 @@ void handel_admin_student_management_menu() {
     }
 }
 
-void handel_admin_login_menu() {
+void handle_admin_login_menu() {
     bool break_flag = false;
     int choice;
     while (!break_flag) {
@@ -338,21 +361,25 @@ void handel_admin_login_menu() {
         scanf("%d", &choice);
         switch(choice) {
             case 1:
-                handel_admin_student_management_menu();
+                handle_admin_student_management_menu();
                 break;
             case 2:
-                handel_admin_food_management_menu();
+                handle_admin_food_management_menu();
                 break;
             case 3:
-                handel_admin_self_management_menu();
+                handle_admin_self_management_menu();
                 break;
             case 4:
-                // handel meal plan management
-                handel_admin_meal_plan_management_menu();
+                // handle meal plan management
+                handle_admin_meal_plan_management_menu();
                 break;
             case 5:
-                // handel profile
-                handel_admin_profile_menu();
+                // handle Report 
+                handle_admin_report_menu();
+                break;  
+            case 6:
+                // handle profile
+                handle_admin_profile_menu();
                 break;
             case BACK:
                 break_flag = true;
@@ -365,7 +392,7 @@ void handel_admin_login_menu() {
     }
 }
 
-void handel_student_login_menu() {
+void handle_student_login_menu() {
     bool break_flag = false;
     int choice;
     while (!break_flag) {
@@ -374,12 +401,12 @@ void handel_student_login_menu() {
         switch(choice) {
             case 1:
                 // Reserve meal
-                handel_student_reserve_menu();
+                handle_student_reserve_menu();
                 break;
             case 2:
                 // check news
                 show_news_table_command();
-                // handel_student_check_news_menu();
+                // handle_student_check_news_menu();
                 break;
             case 3:
                 // vote to poll
@@ -399,7 +426,7 @@ void handel_student_login_menu() {
     }
 }
 
-void handel_main_menu() {
+void handle_main_menu() {
     bool break_flag = false;
     int choice;
     while (!break_flag) {

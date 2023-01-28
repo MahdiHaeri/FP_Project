@@ -41,7 +41,8 @@ void admin_login_menu() {
     printf("2. Food management\n");
     printf("3. Self management\n");
     printf("4. Meal Plan management\n");
-    printf("5. Profile\n");
+    printf("5. Report\n");
+    printf("6. Profile\n");
     printf("0. logout\n");
 }
 
@@ -104,6 +105,12 @@ void admin_meal_plan_management_menu() {
     printf("0. Back\n");
 }
 
+// login as admin/ Report/
+void admin_report_menu() {
+    printf("~/Login/Report/\n");
+    printf("1. Reserve Food Report\n");
+    printf("0. Back\n");
+}
 
 // login as admin/ Profile/
 void admin_profile_menu() {

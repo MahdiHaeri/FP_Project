@@ -19,8 +19,8 @@
 #include "MealFoodConnector.h"
 #include "MealPlan.h"
 
-void handel_student_login_menu();
-void handel_admin_login_menu();  
+void handle_student_login_menu();
+void handle_admin_login_menu();  
 
 
 #define MAX_QUERY_SIZE 1000
@@ -164,10 +164,10 @@ void login_user_command() {
             login_user(user);
             if (strcmp(user->type, "student") == 0) {
                 printf("Welcome student!\n");
-                handel_student_login_menu();
+                handle_student_login_menu();
             } else if (strcmp(user->type, "admin") == 0) {
                 printf("Welcome admin!\n");
-                handel_admin_login_menu();
+                handle_admin_login_menu();
             }
         }
     }
@@ -756,4 +756,10 @@ void define_agent_command() {
     update_reserve_agent(&reserve);
 }
 
+void reserve_food_report_command() {
+    if (!select_all_reserves()) {
+        printf("There is no reserve!\n");
+        return;
+    }
+}
 #endif
