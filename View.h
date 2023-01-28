@@ -13,15 +13,15 @@
 
 #define MAX_QUERY_SIZE 1000
 
-int callback(void* data, int argc, char** argv, char** azColName) {
-    printf("|");
-    for (int i = 0; i < argc; i++) {
-        printf("%-15s", argv[i]? argv[i] : "NULL");
-        printf("|");
-    }
-    printf("\n");
-    return 0;
-}
+// int callback(void* data, int argc, char** argv, char** azColName) {
+//     printf("|");
+//     for (int i = 0; i < argc; i++) {
+//         printf("%-15s", argv[i]? argv[i] : "NULL");
+//         printf("|");
+//     }
+//     printf("\n");
+//     return 0;
+// }
 
 
 //

@@ -10,13 +10,10 @@
 #include "Reserve.h"
 #include "Food.h"
 #include "Self.h"
-// #include "Database.h"
 #include "Database_mysql.h"
 #include "Controller.h"
 #include "TimeLimit.h"
 #include "News.h"
-#include "Meal.h"
-#include "MealFoodConnector.h"
 #include "MealPlan.h"
 
 void handle_student_login_menu();
@@ -487,85 +484,6 @@ void delete_news_command() {
     News news;
     news.news_id = news_id;
     delete_news(&news);
-}
-
-// ----------------- Meal -----------------
-
-void define_meal_command() {
-    char meal_name[MAX_ARRAY_SIZE];
-
-    printf("Enter meal name: ");
-    scanf(" %s", meal_name);
-
-    Meal meal;
-    meal.name = meal_name;
-    insert_meal(&meal);
-}
-
-void delete_meal_command() {
-    int meal_id;
-    printf("Which one of the meal you want to delete?\n");
-    printf("Enter meal id : ");
-    scanf("%d", &meal_id);
-    printf("Are you sure you want to delete meal with id %d? (y/n): ", meal_id);
-    char answer;
-    scanf(" %c", &answer);
-    if (answer == 'n') {
-        return;
-    }
-    Meal meal;
-    meal.meal_id = meal_id;
-    delete_meal(&meal);
-}
-
-// ----------------- meal food connector -----------------
-
-void define_meal_food_connector_command() {
-    // select_all_meals()
-    // select_all_foods();
-    if (select_all_meals() == 0) {
-        printf("There is no meal!\n");
-        printf("Please define meal first!\n");
-        return;
-    }
-
-    if (select_all_foods() == 0) {
-        printf("There is no food!\n");
-        printf("Please define food first!\n");
-        return;
-    }
-    
-    int meal_id;
-    int food_id;
-    
-    printf("Enter meal id: ");
-    scanf("%d", &meal_id);
-    printf("Enter food id: ");
-    scanf("%d", &food_id);
-
-    Meal meal;
-    meal.meal_id = meal_id;
-    Food food;
-    food.food_id = food_id;
-
-    MealFoodConnector meal_food_connector;
-    meal_food_connector.meal = &meal;
-    meal_food_connector.food = &food;
-
-    insert_meal_food_connector(&meal_food_connector);
-}
-
-void delete_meal_food_connector_command() {
-    int connector_id;
-    
-    printf("Enter connector id: ");
-    scanf("%d", &connector_id);
-
-
-    MealFoodConnector meal_food_connector;
-    meal_food_connector.connector_id = connector_id;
-
-    delete_meal_food_connector(&meal_food_connector);
 }
 
 // ----------------- meal plan -----------------

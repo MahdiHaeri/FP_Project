@@ -8,7 +8,8 @@
         "functional": "c",
         "sqlite3.h": "c",
         "typeinfo": "c",
-        "mealfoodconnector.h": "c"
+        "mealfoodconnector.h": "c",
+        "meal.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

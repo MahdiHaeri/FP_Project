@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sqlite3.h>
 #include "View.h"
 #include "User.h"
 #include "Reserve.h"

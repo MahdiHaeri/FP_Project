@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <sqlite3.h>
+// #include <sqlite3.h>
 #include <string.h>
 #include "Controller.h"
 #include "View.h"
@@ -9,7 +9,7 @@
 #include "Food.h"
 #include "Self.h"
 #include "DatabaseCommand.h"
-#include "Database.h"
+#include "Database_mysql.h"
 
 
 int main(int argc, char const *argv[]) {

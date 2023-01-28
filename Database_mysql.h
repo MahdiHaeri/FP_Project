@@ -11,8 +11,6 @@
 #include "Self.h"
 #include "TimeLimit.h"
 #include "News.h"
-#include "Meal.h"
-#include "MealFoodConnector.h"
 #include "MealPlan.h"
 
 #define MAX_QUERY_SIZE 1000
@@ -328,47 +326,6 @@ void insert_news(News* news) {
 void delete_news(News* news) {
     char query[MAX_QUERY_SIZE];
     sprintf(query, "DELETE FROM News WHERE news_id = %d;", news->news_id);
-    if (mysql_query(con, query)) {
-        finish_with_error(con);
-    }
-}
-
-// ------------------ Meal ------------------ //
-
-void insert_meal(Meal* meal) {
-    char query[MAX_QUERY_SIZE];
-    sprintf(query, "INSERT INTO Meal VALUES (%s, '%s')",
-            "NULL",
-            meal->name);
-    if (mysql_query(con, query)) {
-        finish_with_error(con);
-    }
-}
-
-void delete_meal(Meal* meal) {
-    char query[MAX_QUERY_SIZE];
-    sprintf(query, "DELETE FROM Meal WHERE meal_id = %d;", meal->meal_id);
-    if (mysql_query(con, query)) {
-        finish_with_error(con);
-    }
-}
-
-// ------------------ meal food connector ------------------ //
-
-void insert_meal_food_connector(MealFoodConnector* meal_food_connector) {
-    char query[MAX_QUERY_SIZE];
-    sprintf(query, "INSERT INTO MealFoodConnector VALUES (%s, %d, %d);",
-            "NULL",
-            meal_food_connector->meal->meal_id,
-            meal_food_connector->food->food_id);
-    if (mysql_query(con, query)) {
-        finish_with_error(con);
-    }
-}
-
-void delete_meal_food_connector(MealFoodConnector* meal_food_connector) {
-    char query[MAX_QUERY_SIZE];
-    sprintf(query, "DELETE FROM MealFoodConnector WHERE meal_food_connector_id = %d;", meal_food_connector->connector_id);
     if (mysql_query(con, query)) {
         finish_with_error(con);
     }
