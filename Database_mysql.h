@@ -454,6 +454,48 @@ void delete_reserve(Reserve* reserve) {
     }
 }
 
+bool select_reserve_by_id(Reserve* reserve) {
+    char query[MAX_QUERY_SIZE];
+    sprintf(query, "SELECT * FROM Reserve WHERE reserve_id = %d;", reserve->reserve_id);
+    if (mysql_query(con, query)) {
+        finish_with_error(con);
+    }
+    MYSQL_RES* result = mysql_store_result(con);
+    if (result == NULL) {
+        finish_with_error(con);
+    }
+    int num_fields = mysql_num_fields(result);
+    MYSQL_ROW row;
+    if ((row = mysql_fetch_row(result))) {
+        // reserve->user = select_user_by_id(atoi(row[1]));
+        // reserve->meal_plan = select_meal_plan_by_id(atoi(row[2]));
+        reserve->date = atoll(row[3]);
+        reserve->status = strdup(row[4]);
+        return true;
+    }
+    return false;
+}
+
+void update_reserve_status(Reserve* reserve) {
+    char query[MAX_QUERY_SIZE];
+    sprintf(query, "UPDATE Reserve SET status = '%s' WHERE reserve_id = %d;",
+            reserve->status,
+            reserve->reserve_id);
+    if (mysql_query(con, query)) {
+        finish_with_error(con);
+    }
+}
+
+void update_reserve_agent(Reserve* reserve) {
+    char query[MAX_QUERY_SIZE];
+    sprintf(query, "UPDATE Reserve SET agent_id = %d WHERE reserve_id = %d;",
+            reserve->agent->user_id,
+            reserve->reserve_id);
+    if (mysql_query(con, query)) {
+        finish_with_error(con);
+    }
+}
+
 // ------------------ Selects ------------------ //
 
 bool select_user_by_id_and_password(User* user) {
@@ -473,15 +515,15 @@ bool select_user_by_id_and_password(User* user) {
     MYSQL_ROW row;
     row = mysql_fetch_row(result);
     user->user_id = atoi(row[0]);
-    strcpy(user->name, row[1]);
-    strcpy(user->family, row[2]);
-    strcpy(user->password, row[3]);
-    strcpy(user->nation_id_code, row[4]);
+    user->name = strdup(row[1]);
+    user->family = strdup( row[2]);
+    user->password = strdup(row[3]);
+    user->nation_id_code = strdup(row[4]);
     user->birthdate = atoi(row[5]);
-    strcpy(user->gender, row[6]);
-    strcpy(user->type, row[7]);
-    strcpy(user->status, row[8]);
-    strcpy(user->login_logout, row[9]);
+    user->gender = strdup(row[6]);
+    user->type = strdup(row[7]);
+    user->status = strdup(row[8]);
+    user->login_logout = strdup(row[9]);
     user->balance = atoi(row[10]);
     return true;
 }
@@ -512,7 +554,7 @@ void select_deactive_users() {
 
 bool select_public_info_of_user(User* user) {
     char query[MAX_QUERY_SIZE];
-    sprintf(query, "SELECT user_id, name, family, balance, gender FROM User WHERE user_id = %d;", user->user_id);
+    sprintf(query, "SELECT user_id, name, family, gender FROM User WHERE user_id = %d;", user->user_id);
     if (mysql_query(con, query)) {
         finish_with_error(con);
     }

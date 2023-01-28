@@ -115,8 +115,17 @@ void handel_student_reserve_menu() {
                 break;
             case 3:
                 // cancel reserve
+                cancel_reserve_command();
                 break;
             case 4:
+                // take reserve
+                take_reserve_command();
+                break;
+            case 5:
+                // define agent
+                define_agent_command();
+                break;
+            case 6:
                 // show reserve
                 show_reserve_command();
                 break;

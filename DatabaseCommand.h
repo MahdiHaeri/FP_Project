@@ -37,6 +37,59 @@ llint get_current_time() {
     return 0;
 }
 
+// ----------------- Show -----------------
+
+void show_students_table_command() {
+    if (!select_all_students()) {
+        printf("There is no student!\n");
+    }
+}
+
+void show_news_table_command() {
+    if (!select_all_news()) {
+        printf("There is no news!\n");
+    }
+}
+
+void show_foods_table_command() {
+    if (!select_all_foods()) {
+        printf("There is no food!\n");
+    }
+}
+
+void show_selfs_table_command() {
+    if (!select_all_selfs()) {
+        printf("There is no self!\n");
+    }
+}
+
+void show_meal_plans_table_command() {
+    if (!select_all_meal_plans()) {
+        printf("There is no meal plan!\n");
+    }
+}
+
+void show_admins_table_command() {
+    if (!select_all_admins()) {
+        printf("There is no admin!\n");
+    }
+}
+
+void show_profile_command() {
+    if (!select_user_by_id(current_user)) {
+        printf("There is no user with id %d!\n", current_user->user_id);
+        return;
+    }
+}
+
+void show_reserve_command() {
+    if (!select_reserve_by_user_id(current_user)) {
+        printf("There is no reserve for this user!\n");
+    }
+}
+
+// ----------------- User -----------------
+
 void register_user_command(char* user_type, char* user_status) {
     // define variables
     char name[MAX_ARRAY_SIZE];
@@ -621,56 +674,86 @@ void reserve_in_self_command() {
     insert_reserve(&reserve_in_self);
 }
 
-
-
-// ----------------- Show -----------------
-
-void show_students_table_command() {
-    if (!select_all_students()) {
-        printf("There is no student!\n");
-    }
-}
-
-void show_news_table_command() {
-    if (!select_all_news()) {
-        printf("There is no news!\n");
-    }
-}
-
-void show_foods_table_command() {
-    if (!select_all_foods()) {
-        printf("There is no food!\n");
-    }
-}
-
-void show_selfs_table_command() {
-    if (!select_all_selfs()) {
-        printf("There is no self!\n");
-    }
-}
-
-void show_meal_plans_table_command() {
-    if (!select_all_meal_plans()) {
-        printf("There is no meal plan!\n");
-    }
-}
-
-void show_admins_table_command() {
-    if (!select_all_admins()) {
-        printf("There is no admin!\n");
-    }
-}
-
-void show_profile_command() {
-    if (!select_user_by_id(current_user)) {
-        printf("There is no user with id %d!\n", current_user->user_id);
+void take_reserve_command() {
+    if (!select_reserve_by_user_id(current_user)) {
+        printf("There is no reserve!\n");
         return;
     }
+    int reserve_id;
+    printf("Enter reserve id: ");
+    scanf("%d", &reserve_id);
+    Reserve reserve;
+    reserve.reserve_id = reserve_id;
+    if (!select_reserve_by_id(&reserve)) {
+        printf("There is no reserve with id %d!\n", reserve_id);
+        return;
+    }
+    if (strcmp(reserve.status, "Taken") == 0) {
+        printf("This reserve is already taken!\n");
+        return;
+    }
+    reserve.status = "Taken";
+    update_reserve_status(&reserve);
 }
 
-void show_reserve_command() {
+void cancel_reserve_command() {
     if (!select_reserve_by_user_id(current_user)) {
-        printf("There is no reserve for this user!\n");
+        printf("There is no reserve!\n");
+        return;
     }
+    int reserve_id;
+    printf("Enter reserve id: ");
+    scanf("%d", &reserve_id);
+    Reserve reserve;
+    reserve.reserve_id = reserve_id;
+    if (!select_reserve_by_id(&reserve)) {
+        printf("There is no reserve with id %d!\n", reserve_id);
+        return;
+    }
+    if (strcmp(reserve.status, "Taken") == 0) {
+        printf("This reserve is already taken and can not be canceled!\n");
+        return;
+    }
+    // reserve.meal_plan->count++;
+    // update_meal_plan_count(reserve.meal_plan);
+    delete_reserve(&reserve);
 }
+
+void define_agent_command() {
+    if (!select_reserve_by_user_id(current_user)) {
+        printf("There is no reserve!\n");
+        return;
+    }
+    int reserve_id;
+    printf("Enter reserve id: ");
+    scanf("%d", &reserve_id);
+    Reserve reserve;
+    reserve.reserve_id = reserve_id;
+    if (!select_reserve_by_id(&reserve)) {
+        printf("There is no reserve with id %d!\n", reserve_id);
+        return;
+    }
+    int user_id;
+    printf("Enter agent user id: ");
+    scanf("%d", &user_id);
+    User user;
+    user.user_id = user_id;
+    if (!select_public_info_of_user(&user)) {
+        printf("There is no user with id %d!\n", user_id);
+        return;
+    }
+    if (user.user_id == current_user->user_id) {
+        printf("You can not define yourself as agent!\n");
+        return;
+    }
+    char answer;
+    printf("Are you sure you want to define user with id %d as agent? (y/n): ", user_id);
+    scanf(" %c", &answer);
+    if (answer == 'n') {
+        return;
+    }
+    reserve.agent = &user;
+    update_reserve_agent(&reserve);
+}
+
 #endif

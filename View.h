@@ -121,8 +121,10 @@ void student_reserve_menu() {
     printf("~/Login/Reserve/\n");
     printf("1. Reserve In Self\n");
     printf("2. Daily Reserve\n");
-    printf("2. Cancel Reserve\n");
-    printf("4. Show Reserve Table\n");
+    printf("3. Cancel Reserve\n");
+    printf("4. Take Reserve\n");
+    printf("5. Define Agent\n");
+    printf("6. Show Reserve Table\n");
     printf("0. Back\n");
 }
 
